@@ -24,9 +24,17 @@ export class UserService {
     }
   }
 
-  async getUser(id: number) {
+  async getUserById(id: number) {
     try {
-      return await this.userRepository.getUser(id);
+      return await this.userRepository.getUserById(id);
+    } catch (err) {
+      throw new Error('Falha ao encontrar usuário');
+    }
+  }
+
+  async getUserByEmail(email: string) {
+    try {
+      return await this.userRepository.getUserByEmail(email);
     } catch (err) {
       throw new Error('Falha ao encontrar usuário');
     }

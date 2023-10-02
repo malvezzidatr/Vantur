@@ -30,7 +30,7 @@ export class PrismaUserRepository implements UserRepository {
     }
   }
 
-  async getUser(id: number) {
+  async getUserById(id: number) {
     try {
       return await this.prisma.user.findUnique({
         where: {
@@ -44,7 +44,25 @@ export class PrismaUserRepository implements UserRepository {
         },
       });
     } catch (err) {
-      throw new Error('Falha na procura de usuário');
+      throw new Error('Falha ao encontrar usuário');
+    }
+  }
+
+  async getUserByEmail(email: string) {
+    try {
+      return await this.prisma.user.findUnique({
+        where: {
+          email: email,
+        },
+        select: {
+          firstName: true,
+          lastName: true,
+          email: true,
+          isAdmin: true,
+        },
+      });
+    } catch (err) {
+      throw new Error('Falha ao encontrar usuário');
     }
   }
 }

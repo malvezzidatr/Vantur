@@ -8,5 +8,7 @@ export abstract class UserRepository {
     password,
   }: CreateUserBodyDTO): Promise<void>;
 
-  abstract getUser(id: number): Promise<any>;
+  abstract getUserById(id: number): Promise<any>;
+
+  abstract getUserByEmail(email: string): Promise<any>;
 }

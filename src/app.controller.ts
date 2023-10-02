@@ -36,11 +36,25 @@ export class AppController {
     }
   }
 
-  @Get('/:id')
+  @Get('list/id/:id')
   @HttpCode(HttpStatus.OK)
-  async getUser(@Param('id') id: number) {
+  async getUserById(@Param('id') id: number) {
     try {
-      const user = await this.userService.getUser(Number(id));
+      const user = await this.userService.getUserById(Number(id));
+      return user;
+    } catch (err) {
+      throw new HttpException(
+        'Falha ao encontrar usuário',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Get('list/email/:email')
+  @HttpCode(HttpStatus.OK)
+  async getUserByEmail(@Param('email') email: string) {
+    try {
+      const user = await this.userService.getUserByEmail(email);
       return user;
     } catch (err) {
       throw new HttpException(
