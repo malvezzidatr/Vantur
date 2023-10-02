@@ -1,8 +1,10 @@
 export abstract class UserRepository {
-  abstract create(
+  abstract createUser(
     firstName: string,
     lastName: string,
     email: string,
     password: string,
   ): Promise<void>;
+
+  abstract getUser(id: number): Promise<any>;
 }

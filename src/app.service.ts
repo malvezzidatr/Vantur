@@ -13,7 +13,7 @@ export class UserService {
     password,
   }: CreateUserBodyDTO): Promise<void> {
     try {
-      return await this.userRepository.create(
+      return await this.userRepository.createUser(
         firstName,
         lastName,
         email,
@@ -21,6 +21,14 @@ export class UserService {
       );
     } catch (err) {
       throw new Error('Falha ao criar o usuário');
+    }
+  }
+
+  async getUser(id: number) {
+    try {
+      return await this.userRepository.getUser(id);
+    } catch (err) {
+      throw new Error('Falha ao encontrar usuário');
     }
   }
 }

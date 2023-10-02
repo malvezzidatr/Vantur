@@ -5,8 +5,9 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaService) {}
+  abstract: any;
 
-  async create(
+  async createUser(
     firstName: string,
     lastName: string,
     email: string,
@@ -25,6 +26,24 @@ export class PrismaUserRepository implements UserRepository {
       return;
     } catch (err) {
       throw new Error('Falha ao criar o usuário');
+    }
+  }
+
+  async getUser(id: number) {
+    try {
+      return await this.prisma.user.findUnique({
+        where: {
+          id: id,
+        },
+        select: {
+          firstName: true,
+          lastName: true,
+          email: true,
+          isAdmin: true,
+        },
+      });
+    } catch (err) {
+      throw new Error('Falha na procura de usuário');
     }
   }
 }
