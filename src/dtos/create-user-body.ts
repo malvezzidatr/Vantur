@@ -1,6 +1,8 @@
 import { IsNotEmpty, Length, IsEmail } from 'class-validator';
 
 export class CreateUserBodyDTO {
+  id: string;
+
   @Length(2, 20)
   @IsNotEmpty({
     message: 'O primeiro nome não pode ficar vazio',
@@ -19,4 +21,6 @@ export class CreateUserBodyDTO {
   @Length(8, 30)
   @IsNotEmpty()
   password?: string;
+
+  salt: string;
 }

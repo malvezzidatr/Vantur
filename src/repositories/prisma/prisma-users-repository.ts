@@ -9,18 +9,22 @@ export class PrismaUserRepository implements UserRepository {
   abstract: any;
 
   async createUser({
+    id,
     firstName,
     lastName,
     email,
     password,
+    salt,
   }: CreateUserBodyDTO): Promise<void> {
     try {
       await this.prisma.user.create({
         data: {
+          id,
           firstName,
           lastName,
           email,
           password,
+          salt,
         },
       });
 
@@ -30,13 +34,14 @@ export class PrismaUserRepository implements UserRepository {
     }
   }
 
-  async getUserById(id: number) {
+  async getUserById(id: string) {
     try {
       return await this.prisma.user.findUnique({
         where: {
           id: id,
         },
         select: {
+          id: true,
           firstName: true,
           lastName: true,
           email: true,
@@ -55,6 +60,7 @@ export class PrismaUserRepository implements UserRepository {
           email: email,
         },
         select: {
+          id: true,
           firstName: true,
           lastName: true,
           email: true,

@@ -10,7 +10,8 @@ import {
 } from '@nestjs/common';
 import { CreateUserBodyDTO } from './dtos/create-user-body';
 import { UserService } from './app.service';
-
+import { createRandomSalt, encryptPassword } from './utils/crypto';
+import { v4 as uuidv4 } from 'uuid';
 @Controller('user')
 export class AppController {
   constructor(private userService: UserService) {}
@@ -19,13 +20,17 @@ export class AppController {
   @HttpCode(HttpStatus.CREATED)
   async createUser(@Body() body: CreateUserBodyDTO): Promise<any> {
     const { email, firstName, lastName, password } = body;
+    const salt = await createRandomSalt(16, 'hex');
+    const passwordEncrypted = await encryptPassword(password, salt);
 
     try {
       const user = await this.userService.createUser({
+        id: uuidv4(),
         email,
         firstName,
         lastName,
-        password,
+        password: passwordEncrypted,
+        salt,
       });
       return user;
     } catch (err) {
@@ -38,9 +43,9 @@ export class AppController {
 
   @Get('list/id/:id')
   @HttpCode(HttpStatus.OK)
-  async getUserById(@Param('id') id: number) {
+  async getUserById(@Param('id') id: string) {
     try {
-      const user = await this.userService.getUserById(Number(id));
+      const user = await this.userService.getUserById(id);
       return user;
     } catch (err) {
       throw new HttpException(
