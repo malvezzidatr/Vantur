@@ -8,12 +8,13 @@ import {
   Get,
   Param,
 } from '@nestjs/common';
-import { CreateUserBodyDTO } from './dtos/create-user-body';
-import { UserService } from './app.service';
-import { createRandomSalt, encryptPassword } from './utils/crypto';
+import { CreateUserBodyDTO } from './dto/create-user-body';
+import { createRandomSalt, encryptPassword } from '../utils/crypto';
 import { v4 as uuidv4 } from 'uuid';
+import { UserService } from './users.service';
+
 @Controller('user')
-export class AppController {
+export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('create')

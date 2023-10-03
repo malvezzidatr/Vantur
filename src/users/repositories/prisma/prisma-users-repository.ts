@@ -1,7 +1,7 @@
 import { PrismaService } from 'src/database/prisma.service';
 import { UserRepository } from '../users-repository';
 import { Injectable } from '@nestjs/common';
-import { CreateUserBodyDTO } from 'src/dtos/create-user-body';
+import { CreateUserBodyDTO } from 'src/users/dto/create-user-body';
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {

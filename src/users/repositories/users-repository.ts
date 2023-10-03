@@ -1,4 +1,4 @@
-import { CreateUserBodyDTO } from 'src/dtos/create-user-body';
+import { CreateUserBodyDTO } from 'src/users/dto/create-user-body';
 
 export abstract class UserRepository {
   abstract createUser({

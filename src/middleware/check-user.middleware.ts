@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { UserService } from 'src/app.service';
+import { UserService } from 'src/users/users.service';
 
 @Injectable()
 export class CheckUserMiddleware implements NestMiddleware {
