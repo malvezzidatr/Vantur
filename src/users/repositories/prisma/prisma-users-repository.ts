@@ -1,7 +1,8 @@
 import { PrismaService } from 'src/database/prisma.service';
 import { UserRepository } from '../users-repository';
 import { Injectable } from '@nestjs/common';
-import { CreateUserBodyDTO } from 'src/users/dto/create-user-body';
+import { CreateUserDTO } from 'src/users/dto/create-user-body';
+import { UpdateUserDTO } from 'src/users/dto/update-user';
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
@@ -15,7 +16,7 @@ export class PrismaUserRepository implements UserRepository {
     email,
     password,
     salt,
-  }: CreateUserBodyDTO): Promise<void> {
+  }: CreateUserDTO): Promise<void> {
     try {
       await this.prisma.user.create({
         data: {
@@ -69,6 +70,17 @@ export class PrismaUserRepository implements UserRepository {
       });
     } catch (err) {
       throw new Error('Falha ao encontrar usuário');
+    }
+  }
+
+  async updateUser(id: string, updateUserDTO: UpdateUserDTO) {
+    try {
+      return await this.prisma.user.update({
+        where: { id: id },
+        data: updateUserDTO,
+      });
+    } catch (err) {
+      throw new Error('Falha ao atualizar usuário');
     }
   }
 }

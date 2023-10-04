@@ -1,4 +1,5 @@
-import { CreateUserBodyDTO } from 'src/users/dto/create-user-body';
+import { CreateUserDTO } from 'src/users/dto/create-user-body';
+import { UpdateUserDTO } from '../dto/update-user';
 
 export abstract class UserRepository {
   abstract createUser({
@@ -8,9 +9,11 @@ export abstract class UserRepository {
     email,
     password,
     salt,
-  }: CreateUserBodyDTO): Promise<void>;
+  }: CreateUserDTO): Promise<void>;
 
   abstract getUserById(id: string): Promise<any>;
 
   abstract getUserByEmail(email: string): Promise<any>;
+
+  abstract updateUser(id: string, updateUserDTO: UpdateUserDTO);
 }

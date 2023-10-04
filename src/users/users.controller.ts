@@ -7,11 +7,13 @@ import {
   HttpException,
   Get,
   Param,
+  Put,
 } from '@nestjs/common';
-import { CreateUserBodyDTO } from './dto/create-user-body';
+import { CreateUserDTO } from './dto/create-user-body';
 import { createRandomSalt, encryptPassword } from '../utils/crypto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from './users.service';
+import { UpdateUserDTO } from './dto/update-user';
 
 @Controller('user')
 export class UserController {
@@ -19,8 +21,8 @@ export class UserController {
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
-  async createUser(@Body() body: CreateUserBodyDTO): Promise<any> {
-    const { email, firstName, lastName, password } = body;
+  async createUser(@Body() createUserDTO: CreateUserDTO): Promise<any> {
+    const { email, firstName, lastName, password } = createUserDTO;
     const salt = await createRandomSalt(16, 'hex');
     const passwordEncrypted = await encryptPassword(password, salt);
 
@@ -65,6 +67,23 @@ export class UserController {
     } catch (err) {
       throw new HttpException(
         'Falha ao encontrar usuário',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Put('update/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async updateUser(
+    @Param('id') id: string,
+    @Body() updateUserDTO: UpdateUserDTO,
+  ) {
+    try {
+      const updatedUser = await this.userService.updateUser(id, updateUserDTO);
+      return updatedUser;
+    } catch (err) {
+      throw new HttpException(
+        'Falha ao atualizar usuário',
         HttpStatus.BAD_REQUEST,
       );
     }

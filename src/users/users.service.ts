@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserBodyDTO } from './dto/create-user-body';
+import { CreateUserDTO } from './dto/create-user-body';
 import { UserRepository } from './repositories/users-repository';
+import { UpdateUserDTO } from './dto/update-user';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,7 @@ export class UserService {
     lastName,
     password,
     salt,
-  }: CreateUserBodyDTO): Promise<void> {
+  }: CreateUserDTO): Promise<void> {
     try {
       return await this.userRepository.createUser({
         id,
@@ -41,6 +42,15 @@ export class UserService {
       return await this.userRepository.getUserByEmail(email);
     } catch (err) {
       throw new Error('Falha ao encontrar usuário');
+    }
+  }
+
+  async updateUser(id: string, updateUserDTO: UpdateUserDTO) {
+    try {
+      await this.userRepository.updateUser(id, updateUserDTO);
+      return;
+    } catch (err) {
+      throw new Error('Falha ao atualizar usuário');
     }
   }
 }
