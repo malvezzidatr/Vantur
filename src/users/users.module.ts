@@ -22,6 +22,7 @@ import { UserController } from './users.controller';
       useClass: PrismaUserRepository,
     },
   ],
+  exports: [UserService],
 })
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

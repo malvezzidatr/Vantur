@@ -10,7 +10,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user-body';
-import { createRandomSalt, encryptPassword } from '../utils/crypto';
+import { createRandomSalt, encryptPsswd } from '../utils/crypto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from './users.service';
 import { UpdateUserDTO } from './dto/update-user';
@@ -24,7 +24,6 @@ export class UserController {
   async createUser(@Body() createUserDTO: CreateUserDTO): Promise<any> {
     const { email, firstName, lastName, password } = createUserDTO;
     const salt = await createRandomSalt(16, 'hex');
-    const passwordEncrypted = await encryptPassword(password, salt);
 
     try {
       const user = await this.userService.createUser({
@@ -32,7 +31,7 @@ export class UserController {
         email,
         firstName,
         lastName,
-        password: passwordEncrypted,
+        password: String(await encryptPsswd(password)),
         salt,
       });
       return user;

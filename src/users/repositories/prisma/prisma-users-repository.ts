@@ -66,6 +66,8 @@ export class PrismaUserRepository implements UserRepository {
           lastName: true,
           email: true,
           isAdmin: true,
+          password: true,
+          salt: true,
         },
       });
     } catch (err) {

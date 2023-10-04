@@ -1,12 +1,36 @@
 import * as crypto from 'crypto';
-
-export async function encryptPassword(password: string, salt: string) {
-  const hash = crypto
-    .pbkdf2Sync(password, salt, 10000, 64, 'sha512')
-    .toString('hex');
-  return hash;
-}
+import * as bcrypt from 'bcrypt';
 
 export async function createRandomSalt(bytes: number, type: BufferEncoding) {
   return crypto.randomBytes(bytes).toString(type);
+}
+
+export function encryptPsswd(password: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    bcrypt.genSalt(Number(process.env.SALT_ROUNDS), (err, salt) => {
+      if (err) {
+        reject(err);
+      } else {
+        bcrypt.hash(password, salt, (hashErr, hash) => {
+          if (hashErr) {
+            reject(hashErr);
+          } else {
+            resolve(hash);
+          }
+        });
+      }
+    });
+  });
+}
+
+export function comparePsswd(password: string, hash: string) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, hash, function (err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
 }
