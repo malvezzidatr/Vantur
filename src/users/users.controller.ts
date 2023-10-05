@@ -60,6 +60,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('list/email/:email')
   @HttpCode(HttpStatus.OK)
   async getUserByEmail(@Param('email') email: string) {
@@ -74,6 +75,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Put('update/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async updateUser(
