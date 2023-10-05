@@ -8,12 +8,14 @@ import {
   Get,
   Param,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user-body';
 import { createRandomSalt, encryptPsswd } from '../utils/crypto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from './users.service';
 import { UpdateUserDTO } from './dto/update-user';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -43,6 +45,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('list/id/:id')
   @HttpCode(HttpStatus.OK)
   async getUserById(@Param('id') id: string) {
