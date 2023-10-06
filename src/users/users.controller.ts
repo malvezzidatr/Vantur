@@ -24,17 +24,18 @@ export class UserController {
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
   async createUser(@Body() createUserDTO: CreateUserDTO): Promise<any> {
-    const { email, firstName, lastName, password } = createUserDTO;
+    const { email, first_name, last_name, password, travels } = createUserDTO;
     const salt = await createRandomSalt(16, 'hex');
 
     try {
       const user = await this.userService.createUser({
         id: uuidv4(),
         email,
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         password: String(await encryptPsswd(password)),
         salt,
+        travels,
       });
       return user;
     } catch (err) {

@@ -3,11 +3,11 @@ import { Length, IsEmail, IsOptional } from 'class-validator';
 export class UpdateUserDTO {
   @IsOptional()
   @Length(2, 20)
-  firstName: string;
+  first_name: string;
 
   @IsOptional()
   @Length(5, 20)
-  lastName: string;
+  last_name: string;
 
   @IsOptional()
   @Length(5, 50)

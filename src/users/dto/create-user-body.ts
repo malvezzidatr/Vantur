@@ -1,4 +1,5 @@
 import { IsNotEmpty, Length, IsEmail } from 'class-validator';
+import { CreateTravelDto } from 'src/travel/dto/create-travel.dto';
 
 export class CreateUserDTO {
   id: string;
@@ -7,13 +8,13 @@ export class CreateUserDTO {
   @IsNotEmpty({
     message: 'O primeiro nome não pode ficar vazio',
   })
-  firstName: string;
+  first_name: string;
 
   @Length(5, 20)
   @IsNotEmpty({
     message: 'Sobrenome não pode ficar ficar vazio',
   })
-  lastName: string;
+  last_name: string;
 
   @Length(5, 50)
   @IsNotEmpty({
@@ -29,4 +30,6 @@ export class CreateUserDTO {
   password?: string;
 
   salt: string;
+
+  travels: CreateTravelDto[];
 }

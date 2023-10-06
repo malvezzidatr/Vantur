@@ -11,8 +11,8 @@ export class PrismaUserRepository implements UserRepository {
 
   async createUser({
     id,
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     email,
     password,
     salt,
@@ -21,8 +21,8 @@ export class PrismaUserRepository implements UserRepository {
       await this.prisma.user.create({
         data: {
           id,
-          firstName,
-          lastName,
+          first_name,
+          last_name,
           email,
           password,
           salt,
@@ -43,8 +43,8 @@ export class PrismaUserRepository implements UserRepository {
         },
         select: {
           id: true,
-          firstName: true,
-          lastName: true,
+          first_name: true,
+          last_name: true,
           email: true,
           isAdmin: true,
         },
@@ -62,8 +62,8 @@ export class PrismaUserRepository implements UserRepository {
         },
         select: {
           id: true,
-          firstName: true,
-          lastName: true,
+          first_name: true,
+          last_name: true,
           email: true,
           isAdmin: true,
           password: true,

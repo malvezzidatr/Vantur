@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTravelDto } from './dto/create-travel.dto';
 import { UpdateTravelDto } from './dto/update-travel.dto';
+import { TravelRepository } from './repositories/travels-repository';
 
 @Injectable()
 export class TravelService {
-  create(createTravelDto: CreateTravelDto) {
-    return 'This action adds a new travel';
+  constructor(private readonly travelRepository: TravelRepository) {}
+
+  async create(createTravelDto: CreateTravelDto) {
+    return await this.travelRepository.createTravel(createTravelDto);
   }
 
   findAll() {

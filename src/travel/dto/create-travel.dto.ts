@@ -1,30 +1,23 @@
-import { CreateUserDTO } from '../../users/dto/create-user-body';
+import { ArrivalDto } from './arrival.dto';
+import { DepartureDto } from './departure.dto';
+import { ParticipantsDto } from './participants.dto';
 
 export class CreateTravelDto {
   id: string;
 
   value: string;
 
-  departureLocation: string;
+  departure_location: string;
 
   destination: string;
 
   seats: number;
 
-  owner: string;
+  ownerId: string;
 
-  participants: {
-    confirmed: CreateUserDTO[];
-    pendents: CreateUserDTO[];
-  };
+  participants: ParticipantsDto;
 
-  departure: {
-    day: Date;
-    places: string[];
-  };
+  departure: DepartureDto;
 
-  arrival: {
-    day: Date;
-    places: string[];
-  };
+  arrival: ArrivalDto;
 }

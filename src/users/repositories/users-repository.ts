@@ -4,8 +4,8 @@ import { UpdateUserDTO } from '../dto/update-user';
 export abstract class UserRepository {
   abstract createUser({
     id,
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     email,
     password,
     salt,

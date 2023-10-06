@@ -10,19 +10,21 @@ export class UserService {
   async createUser({
     id,
     email,
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     password,
     salt,
+    travels,
   }: CreateUserDTO): Promise<void> {
     try {
       return await this.userRepository.createUser({
         id,
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         email,
         password,
         salt,
+        travels,
       });
     } catch (err) {
       throw new Error('Falha ao criar o usuário');
