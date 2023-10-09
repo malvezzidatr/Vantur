@@ -15,7 +15,7 @@ export class PrismaTravelRepository implements TravelRepository {
     const { departure_location, destination, seats, value, ownerId } =
       createTravelDto;
     await this.prisma.travel.create({
-      data: {
+      data: { 
         departure_location,
         destination,
         id: uuidv4(),
