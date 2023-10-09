@@ -3,6 +3,7 @@ import { TravelRepository } from '../travels-repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateTravelDto } from 'src/travel/dto/create-travel.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { UpdateUserAsPendingDTO } from 'src/travel/dto/update-user-as-pending.dto';
 
 @Injectable()
 export class PrismaTravelRepository implements TravelRepository {
@@ -23,6 +24,44 @@ export class PrismaTravelRepository implements TravelRepository {
           connect: {
             id: ownerId,
           },
+        },
+      },
+    });
+  }
+
+  async findTravel(id: string): Promise<any> {
+    return await this.prisma.travel.findUnique({
+      where: { id: id },
+    });
+  }
+
+  async updateUserToPendent(
+    updateUserAsPendingDTO: UpdateUserAsPendingDTO,
+  ): Promise<any> {
+    await this.prisma.pendingUser.create({
+      data: {
+        id: uuidv4(),
+        travel: {
+          connect: { id: updateUserAsPendingDTO.travelId },
+        },
+        user: {
+          connect: { id: updateUserAsPendingDTO.userId },
+        },
+      },
+    });
+  }
+
+  async updateUserToConfirmed(
+    updateUserAsPendingDTO: UpdateUserAsPendingDTO,
+  ): Promise<any> {
+    await this.prisma.pendingUser.create({
+      data: {
+        id: uuidv4(),
+        travel: {
+          connect: { id: updateUserAsPendingDTO.travelId },
+        },
+        user: {
+          connect: { id: updateUserAsPendingDTO.userId },
         },
       },
     });

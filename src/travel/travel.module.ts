@@ -4,8 +4,10 @@ import { TravelController } from './travel.controller';
 import { PrismaService } from 'src/database/prisma.service';
 import { TravelRepository } from './repositories/travels-repository';
 import { PrismaTravelRepository } from './repositories/prisma/prisma-travels-repository';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
+  imports: [UsersModule],
   controllers: [TravelController],
   providers: [
     TravelService,

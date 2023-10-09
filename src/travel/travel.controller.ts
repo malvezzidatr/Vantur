@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { TravelService } from './travel.service';
 import { CreateTravelDto } from './dto/create-travel.dto';
-import { UpdateTravelDto } from './dto/update-travel.dto';
+import { UpdateUserAsPendingDTO } from './dto/update-user-as-pending.dto';
 
 @Controller('travel')
 export class TravelController {
@@ -27,12 +27,12 @@ export class TravelController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.travelService.findOne(+id);
+    return this.travelService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTravelDto: UpdateTravelDto) {
-    return this.travelService.update(+id, updateTravelDto);
+  @Patch('pendent')
+  update(@Body() updateUserAsPendingDTO: UpdateUserAsPendingDTO) {
+    return this.travelService.addUserAsPending(updateUserAsPendingDTO);
   }
 
   @Delete(':id')

@@ -10,7 +10,7 @@ export class CreateUserDTO {
   })
   first_name: string;
 
-  @Length(5, 20)
+  @Length(2, 20)
   @IsNotEmpty({
     message: 'Sobrenome não pode ficar ficar vazio',
   })
