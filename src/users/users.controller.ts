@@ -9,26 +9,30 @@ import {
   Param,
   Put,
   UseGuards,
+  Res,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user-body';
 import { createRandomSalt, encryptPsswd } from '../utils/crypto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserServiceImpl } from './services/users-service-impl.service';
 import { UpdateUserDTO } from './dto/update-user';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
+import { Response } from 'express';
 
 @Controller('user')
 export class UserController {
   constructor(private userServiceImpl: UserServiceImpl) {}
 
   @Post('create')
-  @HttpCode(HttpStatus.CREATED)
-  async createUser(@Body() createUserDTO: CreateUserDTO): Promise<any> {
+  async createUser(
+    @Body() createUserDTO: CreateUserDTO,
+    @Res() response: Response,
+  ) {
     const { email, first_name, last_name, password, travels } = createUserDTO;
     const salt = await createRandomSalt(16, 'hex');
 
     try {
-      const user = await this.userServiceImpl.createUser({
+      await this.userServiceImpl.createUser({
         id: uuidv4(),
         email,
         first_name,
@@ -37,7 +41,7 @@ export class UserController {
         salt,
         travels,
       });
-      return user;
+      return response.status(201).send();
     } catch (err) {
       throw new HttpException(
         'Falha ao criar o usuário',

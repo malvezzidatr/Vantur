@@ -16,9 +16,9 @@ export class UserServiceImpl implements UsersService {
     password,
     salt,
     travels,
-  }: CreateUserDTO): Promise<void> {
+  }: CreateUserDTO): Promise<any> {
     try {
-      return await this.userRepository.createUser({
+      await this.userRepository.createUser({
         id,
         first_name,
         last_name,
@@ -27,6 +27,7 @@ export class UserServiceImpl implements UsersService {
         salt,
         travels,
       });
+      return;
     } catch (err) {
       throw new Error('Falha ao criar o usuário');
     }

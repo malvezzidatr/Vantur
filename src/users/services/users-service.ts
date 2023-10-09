@@ -10,7 +10,7 @@ export abstract class UsersService {
     password,
     salt,
     travels,
-  }: CreateUserDTO): Promise<void>;
+  }: CreateUserDTO): Promise<any>;
 
   abstract getUserById(id: string): Promise<void>;
 

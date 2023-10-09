@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { TravelRepository } from '../travels-repository';
-import { PrismaService } from 'src/database/prisma.service';
-import { CreateTravelDto } from 'src/travel/dto/create-travel.dto';
+import { PrismaService } from '../../../database/prisma.service';
+import { CreateTravelDto } from '../../../travel/dto/create-travel.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { UpdateUserAsPendingDTO } from 'src/travel/dto/update-user-as-pending.dto';
-import { UpdateUserAsConfirmedDTO } from 'src/travel/dto/update-user-as-confirmed.dto';
+import { UpdateUserAsPendingDTO } from '../../../travel/dto/update-user-as-pending.dto';
+import { UpdateUserAsConfirmedDTO } from '../../../travel/dto/update-user-as-confirmed.dto';
 
 @Injectable()
 export class PrismaTravelRepository implements TravelRepository {
