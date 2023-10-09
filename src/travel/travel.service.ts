@@ -3,6 +3,7 @@ import { CreateTravelDto } from './dto/create-travel.dto';
 import { UpdateUserAsPendingDTO } from './dto/update-user-as-pending.dto';
 import { TravelRepository } from './repositories/travels-repository';
 import { UserService } from 'src/users/users.service';
+import { UpdateUserAsConfirmedDTO } from './dto/update-user-as-confirmed.dto';
 
 @Injectable()
 export class TravelService {
@@ -41,6 +42,26 @@ export class TravelService {
 
     return await this.travelRepository.updateUserToPendent(
       updateUserAsPendingDTO,
+    );
+  }
+
+  async addUserAsConfirmed(
+    updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO,
+  ): Promise<void> {
+    const travel = await this.travelRepository.findTravel(
+      updateUserAsConfirmedDTO.travelId,
+    );
+
+    const user = await this.UserService.getUserById(
+      updateUserAsConfirmedDTO.userId,
+    );
+
+    if (!travel || !user) {
+      throw new Error('Viagem ou usuário não encontrado.');
+    }
+
+    return await this.travelRepository.updateUserToConfirmed(
+      updateUserAsConfirmedDTO,
     );
   }
 

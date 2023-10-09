@@ -4,6 +4,7 @@ import { PrismaService } from 'src/database/prisma.service';
 import { CreateTravelDto } from 'src/travel/dto/create-travel.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UpdateUserAsPendingDTO } from 'src/travel/dto/update-user-as-pending.dto';
+import { UpdateUserAsConfirmedDTO } from 'src/travel/dto/update-user-as-confirmed.dto';
 
 @Injectable()
 export class PrismaTravelRepository implements TravelRepository {
@@ -52,17 +53,23 @@ export class PrismaTravelRepository implements TravelRepository {
   }
 
   async updateUserToConfirmed(
-    updateUserAsPendingDTO: UpdateUserAsPendingDTO,
+    updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO,
   ): Promise<any> {
-    await this.prisma.pendingUser.create({
+    await this.prisma.confirmedUser.create({
       data: {
         id: uuidv4(),
         travel: {
-          connect: { id: updateUserAsPendingDTO.travelId },
+          connect: { id: updateUserAsConfirmedDTO.travelId },
         },
         user: {
-          connect: { id: updateUserAsPendingDTO.userId },
+          connect: { id: updateUserAsConfirmedDTO.userId },
         },
+      },
+    });
+
+    await this.prisma.pendingUser.deleteMany({
+      where: {
+        userId: updateUserAsConfirmedDTO.userId,
       },
     });
   }
