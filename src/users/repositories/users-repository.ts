@@ -15,5 +15,5 @@ export abstract class UserRepository {
 
   abstract getUserByEmail(email: string): Promise<any>;
 
-  abstract updateUser(id: string, updateUserDTO: UpdateUserDTO);
+  abstract updateUser(id: string, updateUserDTO: UpdateUserDTO): Promise<any>;
 }

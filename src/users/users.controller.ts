@@ -13,13 +13,13 @@ import {
 import { CreateUserDTO } from './dto/create-user-body';
 import { createRandomSalt, encryptPsswd } from '../utils/crypto';
 import { v4 as uuidv4 } from 'uuid';
-import { UserService } from './users.service';
+import { UserServiceImpl } from './services/users-service-impl.service';
 import { UpdateUserDTO } from './dto/update-user';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userServiceImpl: UserServiceImpl) {}
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
@@ -28,7 +28,7 @@ export class UserController {
     const salt = await createRandomSalt(16, 'hex');
 
     try {
-      const user = await this.userService.createUser({
+      const user = await this.userServiceImpl.createUser({
         id: uuidv4(),
         email,
         first_name,
@@ -51,7 +51,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async getUserById(@Param('id') id: string) {
     try {
-      const user = await this.userService.getUserById(id);
+      const user = await this.userServiceImpl.getUserById(id);
       return user;
     } catch (err) {
       throw new HttpException(
@@ -66,7 +66,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async getUserByEmail(@Param('email') email: string) {
     try {
-      const user = await this.userService.getUserByEmail(email);
+      const user = await this.userServiceImpl.getUserByEmail(email);
       return user;
     } catch (err) {
       throw new HttpException(
@@ -84,7 +84,10 @@ export class UserController {
     @Body() updateUserDTO: UpdateUserDTO,
   ) {
     try {
-      const updatedUser = await this.userService.updateUser(id, updateUserDTO);
+      const updatedUser = await this.userServiceImpl.updateUser(
+        id,
+        updateUserDTO,
+      );
       return updatedUser;
     } catch (err) {
       throw new HttpException(

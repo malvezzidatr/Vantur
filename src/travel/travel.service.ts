@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateTravelDto } from './dto/create-travel.dto';
 import { UpdateUserAsPendingDTO } from './dto/update-user-as-pending.dto';
 import { TravelRepository } from './repositories/travels-repository';
-import { UserService } from 'src/users/users.service';
 import { UpdateUserAsConfirmedDTO } from './dto/update-user-as-confirmed.dto';
+import { UserServiceImpl } from 'src/users/services/users-service-impl.service';
 
 @Injectable()
 export class TravelService {
   constructor(
     private readonly travelRepository: TravelRepository,
-    private readonly UserService: UserService,
+    private readonly userServiceImpl: UserServiceImpl,
   ) {}
 
   async create(createTravelDto: CreateTravelDto) {
@@ -32,7 +32,7 @@ export class TravelService {
       updateUserAsPendingDTO.travelId,
     );
 
-    const user = await this.UserService.getUserById(
+    const user = await this.userServiceImpl.getUserById(
       updateUserAsPendingDTO.userId,
     );
 
@@ -52,7 +52,7 @@ export class TravelService {
       updateUserAsConfirmedDTO.travelId,
     );
 
-    const user = await this.UserService.getUserById(
+    const user = await this.userServiceImpl.getUserById(
       updateUserAsConfirmedDTO.userId,
     );
 

@@ -4,7 +4,7 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { UserService } from './users.service';
+import { UserServiceImpl } from './services/users-service-impl.service';
 import { PrismaService } from '../database/prisma.service';
 import { UserRepository } from './repositories/users-repository';
 import { PrismaUserRepository } from './repositories/prisma/prisma-users-repository';
@@ -15,14 +15,14 @@ import { UserController } from './users.controller';
   imports: [],
   controllers: [UserController],
   providers: [
-    UserService,
+    UserServiceImpl,
     PrismaService,
     {
       provide: UserRepository,
       useClass: PrismaUserRepository,
     },
   ],
-  exports: [UserService],
+  exports: [UserServiceImpl],
 })
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
