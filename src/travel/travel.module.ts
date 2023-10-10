@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { TravelService } from './travel.service';
-import { TravelController } from './travel.controller';
+import { TravelService } from './services/travel.service';
+import { TravelController } from './controller/travel.controller';
 import { PrismaService } from '../database/prisma.service';
 import { TravelRepository } from './repositories/travels-repository';
 import { PrismaTravelRepository } from './repositories/prisma/prisma-travels-repository';

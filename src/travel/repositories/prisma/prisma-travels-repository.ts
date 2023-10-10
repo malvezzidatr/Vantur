@@ -9,7 +9,29 @@ import { UpdateUserAsConfirmedDTO } from '../../../travel/dto/update-user-as-con
 @Injectable()
 export class PrismaTravelRepository implements TravelRepository {
   constructor(private prisma: PrismaService) {}
-  abstract: any;
+
+  async getAllTravels(): Promise<any> {
+    return await this.prisma.travel.findMany({
+      select: {
+        id: true,
+        departure_location: true,
+        destination: true,
+        value: true,
+        seats: true,
+        confirmeds: {
+          select: {
+            id: true,
+          },
+        },
+        owner: {
+          select: {
+            first_name: true,
+            last_name: true,
+          },
+        },
+      },
+    });
+  }
 
   async createTravel(createTravelDto: CreateTravelDto) {
     const { departure_location, destination, seats, value, ownerId } =
@@ -33,6 +55,29 @@ export class PrismaTravelRepository implements TravelRepository {
   async findTravel(id: string): Promise<any> {
     return await this.prisma.travel.findUnique({
       where: { id: id },
+      select: {
+        id: true,
+        departure_location: true,
+        destination: true,
+        seats: true,
+        value: true,
+        owner: {
+          select: {
+            first_name: true,
+            last_name: true,
+          },
+        },
+        confirmeds: {
+          select: {
+            user: true,
+          },
+        },
+        pendents: {
+          select: {
+            user: true,
+          },
+        },
+      },
     });
   }
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTravelDto } from './dto/create-travel.dto';
-import { UpdateUserAsPendingDTO } from './dto/update-user-as-pending.dto';
-import { TravelRepository } from './repositories/travels-repository';
-import { UpdateUserAsConfirmedDTO } from './dto/update-user-as-confirmed.dto';
-import { UserServiceImpl } from '../users/services/users-service-impl.service';
+import { CreateTravelDto } from '../dto/create-travel.dto';
+import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
+import { TravelRepository } from '../repositories/travels-repository';
+import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
+import { UserServiceImpl } from '../../users/services/users-service-impl.service';
 
 @Injectable()
 export class TravelService {
@@ -16,8 +16,8 @@ export class TravelService {
     return await this.travelRepository.createTravel(createTravelDto);
   }
 
-  findAll() {
-    return `This action returns all travel`;
+  async findAll() {
+    return await this.travelRepository.getAllTravels();
   }
 
   async findOne(id: string) {

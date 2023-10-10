@@ -10,9 +10,17 @@ import { UserRepository } from './repositories/users-repository';
 import { PrismaUserRepository } from './repositories/prisma/prisma-users-repository';
 import { CheckUserMiddleware } from '../middleware/check-user.middleware';
 import { UserController } from './users.controller';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from '../auth/constants/token';
 
 @Module({
-  imports: [],
+  imports: [
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '500s' },
+    }),
+  ],
   controllers: [UserController],
   providers: [
     UserServiceImpl,

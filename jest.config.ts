@@ -10,6 +10,8 @@ export default {
   moduleNameMapper: {
     // Mapeamento de módulos, se necessário
     '^@users/(.*)$': '<rootDir>/src/users/$1',
+    '^@travel/(.*)$': '<rootDir>/src/travel/$1',
+    '^@auth/(.*)$': '<rootDir>/src/auth/$1',
   },
   // Outras configurações específicas do seu projeto
 };

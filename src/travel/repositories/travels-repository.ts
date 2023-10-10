@@ -11,4 +11,5 @@ export abstract class TravelRepository {
   abstract updateUserToConfirmed(
     updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO,
   ): Promise<any>;
+  abstract getAllTravels(): Promise<any>;
 }

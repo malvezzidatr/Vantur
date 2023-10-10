@@ -7,16 +7,16 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { TravelService } from './travel.service';
-import { CreateTravelDto } from './dto/create-travel.dto';
-import { UpdateUserAsPendingDTO } from './dto/update-user-as-pending.dto';
-import { UpdateUserAsConfirmedDTO } from './dto/update-user-as-confirmed.dto';
+import { TravelService } from '../services/travel.service';
+import { CreateTravelDto } from '../dto/create-travel.dto';
+import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
+import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
 
 @Controller('travel')
 export class TravelController {
   constructor(private readonly travelService: TravelService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createTravelDto: CreateTravelDto) {
     return this.travelService.create(createTravelDto);
   }
