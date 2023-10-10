@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from '../auth/constants/token';
 import { createResponse } from 'node-mocks-http';
 import { HttpStatus } from '@nestjs/common';
+import { UpdateUserDTO } from './dto/update-user';
 
 describe('UserController', () => {
   let userController: UserController;
@@ -38,49 +39,106 @@ describe('UserController', () => {
     expect(userServiceImpl).toBeDefined();
   });
 
-  describe('createUser', () => {
-    it('should create a user', async () => {
-      const createUserDTO: CreateUserDTO = {
-        email: 'jest@example.com',
-        first_name: 'John',
-        last_name: 'Doe',
-        password: 'password',
-        travels: [],
-        id: '',
-        salt: '',
-      };
-      jest
-        .spyOn(userServiceImpl, 'createUser')
-        .mockResolvedValue(createUserDTO);
-      const response = createResponse();
-      await userController.createUser(createUserDTO, response);
+  it('should create a user', async () => {
+    const createUserDTO: CreateUserDTO = {
+      email: 'jest@example.com',
+      first_name: 'John',
+      last_name: 'Doe',
+      password: 'password',
+      travels: [],
+      id: '',
+      salt: '',
+    };
+    jest.spyOn(userServiceImpl, 'createUser').mockResolvedValue();
+    const response = createResponse();
+    await userController.createUser(createUserDTO, response);
 
-      expect(response._getStatusCode()).toBe(HttpStatus.CREATED);
-    });
-
-    it('should handle errors when creating a user', async () => {
-      const createUserDTO: CreateUserDTO = {
-        email: 'test@example.com',
-        first_name: 'John',
-        last_name: 'Doe',
-        password: 'password',
-        travels: [],
-        id: '',
-        salt: '',
-      };
-
-      jest
-        .spyOn(userServiceImpl, 'createUser')
-        .mockRejectedValue(new Error('Failed to create user'));
-      const response = createResponse();
-
-      try {
-        await userController.createUser(createUserDTO, response);
-      } catch (error) {
-        expect(error.message).toBe('Falha ao criar o usuário');
-      }
-    });
+    expect(response._getStatusCode()).toBe(HttpStatus.CREATED);
   });
 
-  // Add similar tests for other controller methods (getUserById, getUserByEmail, updateUser).
+  it('should handle errors when creating a user', async () => {
+    const createUserDTO: CreateUserDTO = {
+      email: 'test@example.com',
+      first_name: 'John',
+      last_name: 'Doe',
+      password: 'password',
+      travels: [],
+      id: '',
+      salt: '',
+    };
+
+    jest
+      .spyOn(userServiceImpl, 'createUser')
+      .mockRejectedValue(new Error('Failed to create user'));
+    const response = createResponse();
+
+    try {
+      await userController.createUser(createUserDTO, response);
+    } catch (error) {
+      expect(error.message).toBe('Falha ao criar o usuário');
+    }
+  });
+
+  it('should get user by id', async () => {
+    const id = 'teste';
+    jest.spyOn(userServiceImpl, 'getUserById').mockResolvedValue(id);
+    const response = createResponse();
+    await userController.getUserById(id, response);
+    expect(response._getStatusCode()).toBe(200);
+  });
+
+  it('should error in get user by id', async () => {
+    const id = 'teste';
+    jest.spyOn(userServiceImpl, 'getUserById').mockRejectedValue(id);
+    const response = createResponse();
+    try {
+      await userController.getUserById(id, response);
+    } catch (error) {
+      expect(error.message).toBe('Falha ao encontrar usuário');
+    }
+  });
+
+  it('should get user by email', async () => {
+    const email = 'jest@gmail.com';
+    jest.spyOn(userServiceImpl, 'getUserByEmail').mockResolvedValue(email);
+    const response = createResponse();
+    await userController.getUserByEmail(email, response);
+    expect(response._getStatusCode()).toBe(200);
+  });
+
+  it('should get user by email', async () => {
+    const email = 'jest@gmail.com';
+    jest.spyOn(userServiceImpl, 'getUserByEmail').mockRejectedValue(email);
+    const response = createResponse();
+    try {
+      await userController.getUserByEmail(email, response);
+    } catch (error) {
+      expect(error.message).toBe('Falha ao encontrar usuário');
+    }
+  });
+
+  it('should update a user', async () => {
+    const updatedUser: UpdateUserDTO = {
+      email: 'jest_test@gmail.com',
+    };
+
+    jest.spyOn(userServiceImpl, 'updateUser').mockResolvedValue();
+    const response = createResponse();
+    await userController.updateUser('1', updatedUser, response);
+    expect(response._getStatusCode()).toBe(204);
+  });
+
+  it('should update a user', async () => {
+    const updatedUser: UpdateUserDTO = {
+      email: 'jest_test@gmail.com',
+    };
+
+    jest.spyOn(userServiceImpl, 'updateUser').mockRejectedValue(updatedUser);
+    const response = createResponse();
+    try {
+      await userController.updateUser('1', updatedUser, response);
+    } catch (error) {
+      expect(error.message).toBe('Falha ao atualizar usuário');
+    }
+  });
 });

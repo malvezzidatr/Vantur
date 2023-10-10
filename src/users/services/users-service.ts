@@ -16,5 +16,5 @@ export abstract class UsersService {
 
   abstract getUserByEmail(email: string): Promise<void>;
 
-  abstract updateUser(id: string, updateUserDTO: UpdateUserDTO): Promise<void>;
+  abstract updateUser(id: string, updateUserDTO: UpdateUserDTO): Promise<any>;
 }

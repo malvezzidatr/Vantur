@@ -41,7 +41,7 @@ export class UserController {
         salt,
         travels,
       });
-      return response.status(201).send();
+      return response.status(HttpStatus.CREATED).send();
     } catch (err) {
       throw new HttpException(
         'Falha ao criar o usuário',
@@ -53,10 +53,10 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Get('list/id/:id')
   @HttpCode(HttpStatus.OK)
-  async getUserById(@Param('id') id: string) {
+  async getUserById(@Param('id') id: string, @Res() response: Response) {
     try {
       const user = await this.userServiceImpl.getUserById(id);
-      return user;
+      return response.status(HttpStatus.OK).send(user);
     } catch (err) {
       throw new HttpException(
         'Falha ao encontrar usuário',
@@ -68,10 +68,13 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Get('list/email/:email')
   @HttpCode(HttpStatus.OK)
-  async getUserByEmail(@Param('email') email: string) {
+  async getUserByEmail(
+    @Param('email') email: string,
+    @Res() response: Response,
+  ) {
     try {
       const user = await this.userServiceImpl.getUserByEmail(email);
-      return user;
+      return response.status(HttpStatus.OK).send(user);
     } catch (err) {
       throw new HttpException(
         'Falha ao encontrar usuário',
@@ -86,13 +89,11 @@ export class UserController {
   async updateUser(
     @Param('id') id: string,
     @Body() updateUserDTO: UpdateUserDTO,
+    @Res() response: Response,
   ) {
     try {
-      const updatedUser = await this.userServiceImpl.updateUser(
-        id,
-        updateUserDTO,
-      );
-      return updatedUser;
+      await this.userServiceImpl.updateUser(id, updateUserDTO);
+      return response.status(HttpStatus.NO_CONTENT).send();
     } catch (err) {
       throw new HttpException(
         'Falha ao atualizar usuário',

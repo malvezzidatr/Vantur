@@ -16,7 +16,7 @@ export class UserServiceImpl implements UsersService {
     password,
     salt,
     travels,
-  }: CreateUserDTO): Promise<any> {
+  }: CreateUserDTO) {
     try {
       await this.userRepository.createUser({
         id,
