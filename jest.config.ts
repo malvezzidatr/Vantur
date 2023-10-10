@@ -11,10 +11,5 @@ export default {
     // Mapeamento de módulos, se necessário
     '^@users/(.*)$': '<rootDir>/src/users/$1',
   },
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json', // Caminho para o arquivo tsconfig.json
-    },
-  },
   // Outras configurações específicas do seu projeto
 };
