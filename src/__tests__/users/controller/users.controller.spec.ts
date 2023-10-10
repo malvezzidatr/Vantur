@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from './users.controller';
-import { CreateUserDTO } from './dto/create-user-body';
-import { UserServiceImpl } from './services/users-service-impl.service';
-import { PrismaService } from '../database/prisma.service';
-import { UserRepository } from './repositories/users-repository';
-import { PrismaUserRepository } from './repositories/prisma/prisma-users-repository';
+import { UserController } from '../../../users/users.controller';
+import { CreateUserDTO } from '../../../users/dto/create-user-body';
+import { UserServiceImpl } from '../../../users/services/users-service-impl.service';
+import { PrismaService } from '../../../database/prisma.service';
+import { UserRepository } from '../../../users/repositories/users-repository';
+import { PrismaUserRepository } from '../../../users/repositories/prisma/prisma-users-repository';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from '../auth/constants/token';
+import { jwtConstants } from '../../../auth/constants/token';
 import { createResponse } from 'node-mocks-http';
 import { HttpStatus } from '@nestjs/common';
-import { UpdateUserDTO } from './dto/update-user';
+import { UpdateUserDTO } from '../../../users/dto/update-user';
 
 describe('UserController', () => {
   let userController: UserController;
