@@ -21,10 +21,10 @@ import { CheckUserByIdMiddleware } from 'src/middleware/check-user-by-id.middlew
     { provide: TravelRepository, useClass: PrismaTravelRepository },
   ],
 })
-export class TravelModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(CheckUserByIdMiddleware)
-      .forRoutes({ path: 'travel/pendent', method: RequestMethod.PATCH });
-  }
+export class TravelModule {
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer
+  //     .apply(CheckUserByIdMiddleware)
+  //     .forRoutes({ path: 'travel/pendent', method: RequestMethod.PATCH });
+  // }
 }
