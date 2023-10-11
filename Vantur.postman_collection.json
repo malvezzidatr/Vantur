@@ -1,0 +1,265 @@
+{
+	"info": {
+		"_postman_id": "8bff5481-719f-450a-8c67-4262b60966b5",
+		"name": "Vantur",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28200250"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Search by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYWRlZDY3Yi0zMmE5LTQwNWMtYTA1NS02NjM4NzU2NDZmNjciLCJmaXJzdF9uYW1lIjoiQ2FpbyIsImxhc3RfbmFtZSI6Ik1hbHZlenppIiwiaWF0IjoxNjk2ODcwODUyLCJleHAiOjE2OTY4NzEzNTJ9.icRAm-WqGl3pf43Y6UnH5f73g0iP4q7KocM1OgbVF_k"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{path}}/user/list/id/caded67b-32a9-405c-a055-663875646f67"
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "first_name",
+									"value": "Caio",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Malvezzi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "caiomalvezzi11@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "teste1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{path}}/user/create"
+					},
+					"response": []
+				},
+				{
+					"name": "Search by email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYWRlZDY3Yi0zMmE5LTQwNWMtYTA1NS02NjM4NzU2NDZmNjciLCJmaXJzdF9uYW1lIjoiQ2FpbyIsImxhc3RfbmFtZSI6Ik1hbHZlenppIiwiaWF0IjoxNjk2ODcwODUyLCJleHAiOjE2OTY4NzEzNTJ9.icRAm-WqGl3pf43Y6UnH5f73g0iP4q7KocM1OgbVF_k"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{path}}/user/list/email/caiomalvezzi1@gmail.com"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "José",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Silva",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{path}}/user/update/96a104a0-964c-46e2-adab-4d8d1c1b2d69"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "localhost:3000/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "caiomalvezzi11@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "teste1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{path}}/auth/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Travel",
+			"item": [
+				{
+					"name": "Create travel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMmRiZWEwYi1mNTQyLTQ3OWUtOGVhNi1lMTZlNDM4MjE5NmQiLCJmaXJzdF9uYW1lIjoiQ2FpbyIsImxhc3RfbmFtZSI6Ik1hbHZlenppIiwiaWF0IjoxNjk3MDUyMDAyLCJleHAiOjE2OTcwNTI1MDJ9.OcavnXgHaPV252OUzu6pGYJFPMd90m9fs9P70x-Sg6A"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"150\",\r\n    \"departure_location\": \"Mogi Mirim\",\r\n    \"destination\": \"Santos\",\r\n    \"seats\": 15,\r\n    \"ownerId\": \"f2dbea0b-f542-479e-8ea6-e16e4382196d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{path}}/travel/create"
+					},
+					"response": []
+				},
+				{
+					"name": "Add User to pendent",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"c993af2e-0116-4a31-b5f6-f1b8b0024748\",\r\n    \"travelId\": \"5d2c2e7d-dd19-4740-b4f4-8d0f39294349\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/travel/pendent",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"travel",
+								"pendent"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "f1887a88-ee95-4e0a-b4ab-f42af14d44f6",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one travel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/travel/5d2c2e7d-dd19-4740-b4f4-8d0f39294349",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"travel",
+								"5d2c2e7d-dd19-4740-b4f4-8d0f39294349"
+							],
+							"query": [
+								{
+									"key": "travelId",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User to confirmed",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"c993af2e-0116-4a31-b5f6-f1b8b0024748\",\r\n    \"travelId\": \"5d2c2e7d-dd19-4740-b4f4-8d0f39294349\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{path}}/travel/confirm"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Travels",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMmRiZWEwYi1mNTQyLTQ3OWUtOGVhNi1lMTZlNDM4MjE5NmQiLCJmaXJzdF9uYW1lIjoiQ2FpbyIsImxhc3RfbmFtZSI6Ik1hbHZlenppIiwiaWF0IjoxNjk3MDUyMDAyLCJleHAiOjE2OTcwNTI1MDJ9.OcavnXgHaPV252OUzu6pGYJFPMd90m9fs9P70x-Sg6A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{path}}/travel"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
