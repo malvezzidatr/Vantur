@@ -10,7 +10,7 @@ import {
   HttpException,
   UseGuards,
 } from '@nestjs/common';
-import { TravelService } from '../services/travel.service';
+import { TravelServiceImpl } from '../services/travel-service-impl.service';
 import { CreateTravelDto } from '../dto/create-travel.dto';
 import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
@@ -19,7 +19,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('travel')
 export class TravelController {
-  constructor(private readonly travelService: TravelService) {}
+  constructor(private readonly travelServiceImpl: TravelServiceImpl) {}
 
   @UseGuards(AuthGuard)
   @Post('create')
@@ -28,7 +28,7 @@ export class TravelController {
     @Res() response: Response,
   ) {
     try {
-      await this.travelService.createTravel(createTravelDto);
+      await this.travelServiceImpl.createTravel(createTravelDto);
       return response.status(HttpStatus.CREATED).send();
     } catch (err) {
       throw new HttpException('Falha ao criar viagem', HttpStatus.BAD_REQUEST);
@@ -39,7 +39,7 @@ export class TravelController {
   @Get()
   async getAllTravels(@Res() response: Response) {
     try {
-      const travels = await this.travelService.getAllTravels();
+      const travels = await this.travelServiceImpl.getAllTravels();
       return response.status(HttpStatus.OK).send(travels);
     } catch (err) {
       throw new HttpException(
@@ -53,7 +53,7 @@ export class TravelController {
   @Get(':id')
   async getTravelById(@Param('id') id: string, @Res() response: Response) {
     try {
-      const travel = await this.travelService.getTravelById(id);
+      const travel = await this.travelServiceImpl.getTravelById(id);
       return response.status(HttpStatus.OK).send(travel);
     } catch (err) {
       throw new HttpException(
@@ -70,7 +70,7 @@ export class TravelController {
     @Res() response: Response,
   ) {
     try {
-      await this.travelService.addUserAsPending(updateUserAsPendingDTO);
+      await this.travelServiceImpl.addUserAsPending(updateUserAsPendingDTO);
       return response.status(HttpStatus.NO_CONTENT).send();
     } catch (err) {
       throw new HttpException('Falha na requisição', HttpStatus.BAD_REQUEST);
@@ -83,7 +83,7 @@ export class TravelController {
     @Res() response: Response,
   ) {
     try {
-      await this.travelService.addUserAsConfirmed(updateUserAsConfirmedDTO);
+      await this.travelServiceImpl.addUserAsConfirmed(updateUserAsConfirmedDTO);
       return response.status(HttpStatus.NO_CONTENT).send();
     } catch (err) {
       throw new HttpException('Falha na requisição', HttpStatus.BAD_REQUEST);

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TravelController } from '../../../travel/controller/travel.controller';
-import { TravelService } from '../../../travel/services/travel.service';
+import { TravelService } from '../../../travel/services/travel-service-impl.service';
 import { UsersModule } from '../../../users/users.module';
 import { PrismaService } from '../../../database/prisma.service';
 import { TravelRepository } from '../../../travel/repositories/travels-repository';

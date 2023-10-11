@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TravelService } from './services/travel.service';
+import { TravelServiceImpl } from './services/travel-service-impl.service';
 import { TravelController } from './controller/travel.controller';
 import { PrismaService } from '../database/prisma.service';
 import { TravelRepository } from './repositories/travels-repository';
@@ -10,7 +10,7 @@ import { UsersModule } from '../users/users.module';
   imports: [UsersModule],
   controllers: [TravelController],
   providers: [
-    TravelService,
+    TravelServiceImpl,
     PrismaService,
     { provide: TravelRepository, useClass: PrismaTravelRepository },
   ],

@@ -4,9 +4,10 @@ import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
 import { TravelRepository } from '../repositories/travels-repository';
 import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
 import { UserServiceImpl } from '../../users/services/users-service-impl.service';
+import { TravelService } from './travel-service';
 
 @Injectable()
-export class TravelService {
+export class TravelServiceImpl implements TravelService {
   constructor(
     private readonly travelRepository: TravelRepository,
     private readonly userServiceImpl: UserServiceImpl,
