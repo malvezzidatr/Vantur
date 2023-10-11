@@ -77,6 +77,7 @@ export class TravelController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch('confirm')
   async addUserAsConfirmed(
     @Body() updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO,
