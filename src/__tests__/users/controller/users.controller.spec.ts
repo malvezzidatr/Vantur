@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from '../../../users/users.controller';
+import { UserController } from '../../../users/controller/users.controller';
 import { CreateUserDTO } from '../../../users/dto/create-user-body';
 import { UserServiceImpl } from '../../../users/services/users-service-impl.service';
 import { PrismaService } from '../../../database/prisma.service';

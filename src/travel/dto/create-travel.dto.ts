@@ -1,6 +1,4 @@
-import { ArrivalDto } from './arrival.dto';
-import { DepartureDto } from './departure.dto';
-import { ParticipantsDto } from './participants.dto';
+import { CreateUserDTO } from 'src/users/dto/create-user-body';
 
 export class CreateTravelDto {
   id: string;
@@ -15,9 +13,7 @@ export class CreateTravelDto {
 
   ownerId: string;
 
-  participants: ParticipantsDto;
+  confirmeds: CreateUserDTO[];
 
-  departure: DepartureDto;
-
-  arrival: ArrivalDto;
+  pendents: CreateUserDTO[];
 }

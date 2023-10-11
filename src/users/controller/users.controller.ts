@@ -11,12 +11,12 @@ import {
   UseGuards,
   Res,
 } from '@nestjs/common';
-import { CreateUserDTO } from './dto/create-user-body';
-import { createRandomSalt, encryptPsswd } from '../utils/crypto';
+import { CreateUserDTO } from '../dto/create-user-body';
+import { createRandomSalt, encryptPsswd } from '../../utils/crypto';
 import { v4 as uuidv4 } from 'uuid';
-import { UserServiceImpl } from './services/users-service-impl.service';
-import { UpdateUserDTO } from './dto/update-user';
-import { AuthGuard } from '../auth/auth.guard';
+import { UserServiceImpl } from '../services/users-service-impl.service';
+import { UpdateUserDTO } from '../dto/update-user';
+import { AuthGuard } from '../../auth/auth.guard';
 import { Response } from 'express';
 
 @Controller('user')
