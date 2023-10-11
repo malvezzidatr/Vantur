@@ -8,7 +8,7 @@ import { UserServiceImpl } from './services/users-service-impl.service';
 import { PrismaService } from '../database/prisma.service';
 import { UserRepository } from './repositories/users-repository';
 import { PrismaUserRepository } from './repositories/prisma/prisma-users-repository';
-import { CheckUserMiddleware } from '../middleware/check-user.middleware';
+import { CheckUserMiddleware } from '../middleware/check-user-by-email.middleware';
 import { UserController } from './controller/users.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from '../auth/constants/token';
