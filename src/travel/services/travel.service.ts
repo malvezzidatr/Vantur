@@ -13,16 +13,29 @@ export class TravelService {
   ) {}
 
   async createTravel(createTravelDto: CreateTravelDto) {
-    return await this.travelRepository.createTravel(createTravelDto);
+    try {
+      await this.travelRepository.createTravel(createTravelDto);
+      return;
+    } catch (err) {
+      throw new Error();
+    }
   }
 
   async getAllTravels() {
-    return await this.travelRepository.getAllTravels();
+    try {
+      return await this.travelRepository.getAllTravels();
+    } catch (err) {
+      throw new Error();
+    }
   }
 
   async getTravelById(id: string) {
-    const travel = await this.travelRepository.getTravelById(id);
-    return travel;
+    try {
+      const travel = await this.travelRepository.getTravelById(id);
+      return travel;
+    } catch (err) {
+      throw new Error();
+    }
   }
 
   async addUserAsPending(
@@ -39,10 +52,12 @@ export class TravelService {
     if (!travel || !user) {
       throw new Error('Viagem ou usuário não encontrado.');
     }
-
-    return await this.travelRepository.updateUserToPendent(
-      updateUserAsPendingDTO,
-    );
+    try {
+      await this.travelRepository.updateUserToPendent(updateUserAsPendingDTO);
+      return;
+    } catch (err) {
+      throw new Error();
+    }
   }
 
   async addUserAsConfirmed(
@@ -60,8 +75,13 @@ export class TravelService {
       throw new Error('Viagem ou usuário não encontrado.');
     }
 
-    return await this.travelRepository.updateUserToConfirmed(
-      updateUserAsConfirmedDTO,
-    );
+    try {
+      await this.travelRepository.updateUserToConfirmed(
+        updateUserAsConfirmedDTO,
+      );
+      return;
+    } catch (err) {
+      throw new Error();
+    }
   }
 }

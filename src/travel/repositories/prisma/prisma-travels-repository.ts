@@ -11,111 +11,130 @@ export class PrismaTravelRepository implements TravelRepository {
   constructor(private prisma: PrismaService) {}
 
   async getAllTravels(): Promise<any> {
-    return await this.prisma.travel.findMany({
-      select: {
-        id: true,
-        departure_location: true,
-        destination: true,
-        value: true,
-        seats: true,
-        confirmeds: {
-          select: {
-            id: true,
+    try {
+      return await this.prisma.travel.findMany({
+        select: {
+          id: true,
+          departure_location: true,
+          destination: true,
+          value: true,
+          seats: true,
+          confirmeds: {
+            select: {
+              id: true,
+            },
+          },
+          owner: {
+            select: {
+              first_name: true,
+              last_name: true,
+            },
           },
         },
-        owner: {
-          select: {
-            first_name: true,
-            last_name: true,
-          },
-        },
-      },
-    });
+      });
+    } catch (err) {
+      throw new Error();
+    }
   }
 
   async createTravel(createTravelDto: CreateTravelDto) {
-    const { departure_location, destination, seats, value, ownerId } =
-      createTravelDto;
-    await this.prisma.travel.create({
-      data: {
-        departure_location,
-        destination,
-        id: uuidv4(),
-        seats,
-        value,
-        owner: {
-          connect: {
-            id: ownerId,
+    try {
+      const { departure_location, destination, seats, value, ownerId } =
+        createTravelDto;
+      await this.prisma.travel.create({
+        data: {
+          departure_location,
+          destination,
+          id: uuidv4(),
+          seats,
+          value,
+          owner: {
+            connect: {
+              id: ownerId,
+            },
           },
         },
-      },
-    });
+      });
+    } catch (err) {
+      throw new Error();
+    }
   }
 
   async getTravelById(id: string): Promise<any> {
-    return await this.prisma.travel.findUnique({
-      where: { id: id },
-      select: {
-        id: true,
-        departure_location: true,
-        destination: true,
-        seats: true,
-        value: true,
-        owner: {
-          select: {
-            first_name: true,
-            last_name: true,
+    try {
+      return await this.prisma.travel.findUnique({
+        where: { id: id },
+        select: {
+          id: true,
+          departure_location: true,
+          destination: true,
+          seats: true,
+          value: true,
+          owner: {
+            select: {
+              first_name: true,
+              last_name: true,
+            },
+          },
+          confirmeds: {
+            select: {
+              user: true,
+            },
+          },
+          pendents: {
+            select: {
+              user: true,
+            },
           },
         },
-        confirmeds: {
-          select: {
-            user: true,
-          },
-        },
-        pendents: {
-          select: {
-            user: true,
-          },
-        },
-      },
-    });
+      });
+    } catch (err) {
+      throw new Error();
+    }
   }
 
   async updateUserToPendent(
     updateUserAsPendingDTO: UpdateUserAsPendingDTO,
   ): Promise<any> {
-    await this.prisma.pendingUser.create({
-      data: {
-        id: uuidv4(),
-        travel: {
-          connect: { id: updateUserAsPendingDTO.travelId },
+    try {
+      await this.prisma.pendingUser.create({
+        data: {
+          id: uuidv4(),
+          travel: {
+            connect: { id: updateUserAsPendingDTO.travelId },
+          },
+          user: {
+            connect: { id: updateUserAsPendingDTO.userId },
+          },
         },
-        user: {
-          connect: { id: updateUserAsPendingDTO.userId },
-        },
-      },
-    });
+      });
+    } catch (err) {
+      throw new Error();
+    }
   }
 
   async updateUserToConfirmed(
     updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO,
   ): Promise<any> {
-    await this.prisma.confirmedUser.create({
-      data: {
-        id: uuidv4(),
-        travel: {
-          connect: { id: updateUserAsConfirmedDTO.travelId },
+    try {
+      await this.prisma.confirmedUser.create({
+        data: {
+          id: uuidv4(),
+          travel: {
+            connect: { id: updateUserAsConfirmedDTO.travelId },
+          },
+          user: {
+            connect: { id: updateUserAsConfirmedDTO.userId },
+          },
         },
-        user: {
-          connect: { id: updateUserAsConfirmedDTO.userId },
+      });
+      await this.prisma.pendingUser.deleteMany({
+        where: {
+          userId: updateUserAsConfirmedDTO.userId,
         },
-      },
-    });
-
-    await this.prisma.pendingUser.deleteMany({
-      where: {
-        userId: updateUserAsConfirmedDTO.userId,
-      },
-    });
+      });
+    } catch (err) {
+      throw new Error();
+    }
   }
 }
