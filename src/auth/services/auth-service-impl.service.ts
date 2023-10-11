@@ -2,9 +2,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserServiceImpl } from '../../users/services/users-service-impl.service';
 import { comparePsswd } from '../../utils/crypto';
 import { JwtService } from '@nestjs/jwt';
+import { AuthService } from './auth-service';
 
 @Injectable()
-export class AuthService {
+export class AuthServiceImpl implements AuthService {
   constructor(
     private readonly userServiceImUserServiceImpl: UserServiceImpl,
     private readonly jwtService: JwtService,
