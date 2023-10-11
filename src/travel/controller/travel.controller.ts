@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { TravelService } from '../services/travel.service';
 import { CreateTravelDto } from '../dto/create-travel.dto';
 import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
@@ -17,22 +9,22 @@ export class TravelController {
   constructor(private readonly travelService: TravelService) {}
 
   @Post('create')
-  create(@Body() createTravelDto: CreateTravelDto) {
-    return this.travelService.create(createTravelDto);
+  createTravel(@Body() createTravelDto: CreateTravelDto) {
+    return this.travelService.createTravel(createTravelDto);
   }
 
   @Get()
-  findAll() {
-    return this.travelService.findAll();
+  getAllTravels() {
+    return this.travelService.getAllTravels();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.travelService.findOne(id);
+  getTravelById(@Param('id') id: string) {
+    return this.travelService.getTravelById(id);
   }
 
   @Patch('pendent')
-  update(@Body() updateUserAsPendingDTO: UpdateUserAsPendingDTO) {
+  addUserAsPendent(@Body() updateUserAsPendingDTO: UpdateUserAsPendingDTO) {
     return this.travelService.addUserAsPending(updateUserAsPendingDTO);
   }
 
@@ -41,10 +33,5 @@ export class TravelController {
     @Body() updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO,
   ) {
     return this.travelService.addUserAsConfirmed(updateUserAsConfirmedDTO);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.travelService.remove(+id);
   }
 }

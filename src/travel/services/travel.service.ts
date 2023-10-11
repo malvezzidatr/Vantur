@@ -12,23 +12,23 @@ export class TravelService {
     private readonly userServiceImpl: UserServiceImpl,
   ) {}
 
-  async create(createTravelDto: CreateTravelDto) {
+  async createTravel(createTravelDto: CreateTravelDto) {
     return await this.travelRepository.createTravel(createTravelDto);
   }
 
-  async findAll() {
+  async getAllTravels() {
     return await this.travelRepository.getAllTravels();
   }
 
-  async findOne(id: string) {
-    const travel = await this.travelRepository.findTravel(id);
+  async getTravelById(id: string) {
+    const travel = await this.travelRepository.getTravelById(id);
     return travel;
   }
 
   async addUserAsPending(
     updateUserAsPendingDTO: UpdateUserAsPendingDTO,
   ): Promise<void> {
-    const travel = await this.travelRepository.findTravel(
+    const travel = await this.travelRepository.getTravelById(
       updateUserAsPendingDTO.travelId,
     );
 
@@ -48,7 +48,7 @@ export class TravelService {
   async addUserAsConfirmed(
     updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO,
   ): Promise<void> {
-    const travel = await this.travelRepository.findTravel(
+    const travel = await this.travelRepository.getTravelById(
       updateUserAsConfirmedDTO.travelId,
     );
 
@@ -63,9 +63,5 @@ export class TravelService {
     return await this.travelRepository.updateUserToConfirmed(
       updateUserAsConfirmedDTO,
     );
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} travel`;
   }
 }

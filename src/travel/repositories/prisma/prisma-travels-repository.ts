@@ -52,7 +52,7 @@ export class PrismaTravelRepository implements TravelRepository {
     });
   }
 
-  async findTravel(id: string): Promise<any> {
+  async getTravelById(id: string): Promise<any> {
     return await this.prisma.travel.findUnique({
       where: { id: id },
       select: {
