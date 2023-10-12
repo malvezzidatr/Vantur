@@ -15,7 +15,7 @@ import { CreateTravelDto } from '../dto/create-travel.dto';
 import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
 import { Response } from 'express';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../../auth/auth.guard';
 
 @Controller('travel')
 export class TravelController {

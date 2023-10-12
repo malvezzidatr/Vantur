@@ -3,29 +3,24 @@ import { UserRepository } from '../users-repository';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from '../../../users/dto/create-user-body';
 import { UpdateUserDTO } from '../../../users/dto/update-user';
+import { v4 as uuidv4 } from 'uuid';
+import { encryptPsswd } from 'src/utils/crypto';
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaService) {}
   abstract: any;
 
-  async createUser({
-    id,
-    first_name,
-    last_name,
-    email,
-    password,
-    salt,
-  }: CreateUserDTO): Promise<void> {
+  async createUser(createUserDTO: CreateUserDTO): Promise<void> {
+    const { first_name, last_name, email, password } = createUserDTO;
     try {
       await this.prisma.user.create({
         data: {
-          id,
+          id: uuidv4(),
           first_name,
           last_name,
           email,
-          password,
-          salt,
+          password: String(await encryptPsswd(password)),
         },
       });
 
@@ -67,7 +62,6 @@ export class PrismaUserRepository implements UserRepository {
           email: true,
           isAdmin: true,
           password: true,
-          salt: true,
         },
       });
     } catch (err) {

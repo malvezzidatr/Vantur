@@ -8,7 +8,6 @@ export abstract class UsersService {
     first_name,
     last_name,
     password,
-    salt,
     travels,
   }: CreateUserDTO): Promise<any>;
 

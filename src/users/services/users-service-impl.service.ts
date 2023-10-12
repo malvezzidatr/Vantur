@@ -8,25 +8,9 @@ import { UsersService } from './users-service';
 export class UserServiceImpl implements UsersService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async createUser({
-    id,
-    email,
-    first_name,
-    last_name,
-    password,
-    salt,
-    travels,
-  }: CreateUserDTO) {
+  async createUser(createUserDTO: CreateUserDTO) {
     try {
-      await this.userRepository.createUser({
-        id,
-        first_name,
-        last_name,
-        email,
-        password,
-        salt,
-        travels,
-      });
+      await this.userRepository.createUser(createUserDTO);
       return;
     } catch (err) {
       throw new Error('Falha ao criar o usuário');

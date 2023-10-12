@@ -17,7 +17,6 @@ model User {
   email       String          @unique
   password    String
   isAdmin     Boolean         @default(false)
-  salt        String
   travels     Travel[]        @relation("owner")
   pendingUser PendingUser[]
   confirmeds  ConfirmedUser[]

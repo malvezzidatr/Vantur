@@ -47,7 +47,6 @@ describe('UserController', () => {
       password: 'password',
       travels: [],
       id: '',
-      salt: '',
     };
     jest.spyOn(userServiceImpl, 'createUser').mockResolvedValue();
     const response = createResponse();
@@ -64,7 +63,6 @@ describe('UserController', () => {
       password: 'password',
       travels: [],
       id: '',
-      salt: '',
     };
 
     jest

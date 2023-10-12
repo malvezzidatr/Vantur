@@ -12,7 +12,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { CreateUserDTO } from '../dto/create-user-body';
-import { createRandomSalt, encryptPsswd } from '../../utils/crypto';
+import { encryptPsswd } from '../../utils/crypto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserServiceImpl } from '../services/users-service-impl.service';
 import { UpdateUserDTO } from '../dto/update-user';
@@ -28,19 +28,8 @@ export class UserController {
     @Body() createUserDTO: CreateUserDTO,
     @Res() response: Response,
   ) {
-    const { email, first_name, last_name, password, travels } = createUserDTO;
-    const salt = await createRandomSalt(16, 'hex');
-
     try {
-      await this.userServiceImpl.createUser({
-        id: uuidv4(),
-        email,
-        first_name,
-        last_name,
-        password: String(await encryptPsswd(password)),
-        salt,
-        travels,
-      });
+      await this.userServiceImpl.createUser(createUserDTO);
       return response.status(HttpStatus.CREATED).send();
     } catch (err) {
       throw new HttpException(

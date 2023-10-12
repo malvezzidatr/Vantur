@@ -1,9 +1,4 @@
-import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
-
-export async function createRandomSalt(bytes: number, type: BufferEncoding) {
-  return crypto.randomBytes(bytes).toString(type);
-}
 
 export function encryptPsswd(password: string): Promise<string> {
   return new Promise((resolve, reject) => {

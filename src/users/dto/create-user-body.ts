@@ -29,7 +29,5 @@ export class CreateUserDTO {
   })
   password?: string;
 
-  salt: string;
-
   travels: CreateTravelDto[];
 }
