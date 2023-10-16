@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from '../../../users/dto/create-user-body';
 import { UpdateUserDTO } from '../../../users/dto/update-user';
 import { v4 as uuidv4 } from 'uuid';
-import { encryptPsswd } from 'src/utils/crypto';
+import { encryptPsswd } from '../../../utils/crypto';
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {

@@ -43,7 +43,6 @@ describe('UserServiceImpl', () => {
       password: 'password',
       travels: [],
       id: '',
-      salt: '',
     };
 
     const createUserSpy = jest
@@ -63,7 +62,6 @@ describe('UserServiceImpl', () => {
       password: 'password',
       travels: [],
       id: '',
-      salt: '',
     };
 
     const errorMessage = 'Falha ao criar o usuário';

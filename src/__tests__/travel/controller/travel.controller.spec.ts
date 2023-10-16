@@ -10,6 +10,8 @@ import { jwtConstants } from '../../../auth/constants/token';
 import { CreateTravelDto } from 'src/travel/dto/create-travel.dto';
 import { createResponse } from 'node-mocks-http';
 import { HttpStatus } from '@nestjs/common';
+import { UpdateUserAsConfirmedDTO } from 'src/travel/dto/update-user-as-confirmed.dto';
+import { UpdateUserAsPendingDTO } from 'src/travel/dto/update-user-as-pending.dto';
 
 describe('TravelController', () => {
   let travelController: TravelController;
@@ -96,6 +98,105 @@ describe('TravelController', () => {
 
     try {
       await travelController.getAllTravels(response);
+    } catch (error) {
+      expect(error.message).toBe(errorMessage);
+    }
+  });
+
+  it('should get travel by id', async () => {
+    const createTravelDTO: CreateTravelDto = {
+      destination: 'test',
+      departure_location: 'test',
+      id: '',
+      ownerId: '',
+      seats: 15,
+      value: '150',
+      pendents: [],
+      confirmeds: [],
+    };
+    const id = '1';
+    const response = createResponse();
+    jest
+      .spyOn(travelServiceImpl, 'getTravelById')
+      .mockResolvedValue(createTravelDTO);
+    await travelController.getTravelById(id, response);
+    expect(response._getStatusCode()).toBe(HttpStatus.OK);
+  });
+
+  it('should handle error when get travel by id', async () => {
+    const id = '1';
+    const response = createResponse();
+    const errorMessage = 'Falha ao encontrar viagem';
+    jest
+      .spyOn(travelServiceImpl, 'getTravelById')
+      .mockRejectedValue(new Error());
+
+    try {
+      await travelController.getTravelById(id, response);
+    } catch (error) {
+      expect(error.message).toBe(errorMessage);
+    }
+  });
+
+  it('should update user to pendent', async () => {
+    const updateUserAsPendingDTO: UpdateUserAsPendingDTO = {
+      travelId: '1',
+      userId: '1',
+    };
+    const response = createResponse();
+    jest.spyOn(travelServiceImpl, 'addUserAsPending').mockResolvedValue();
+    await travelController.addUserAsPendent(updateUserAsPendingDTO, response);
+    expect(response._getStatusCode()).toBe(HttpStatus.NO_CONTENT);
+  });
+
+  it('should error when update user to pendent', async () => {
+    const updateUserAsPendingDTO: UpdateUserAsPendingDTO = {
+      travelId: '1',
+      userId: '1',
+    };
+    const response = createResponse();
+    const errorMessage = 'Falha na requisição';
+    jest
+      .spyOn(travelServiceImpl, 'addUserAsPending')
+      .mockRejectedValue(new Error());
+
+    try {
+      await travelController.addUserAsPendent(updateUserAsPendingDTO, response);
+    } catch (error) {
+      expect(error.message).toBe(errorMessage);
+    }
+  });
+
+  it('should update user to confirmed', async () => {
+    const updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO = {
+      travelId: '1',
+      userId: '1',
+    };
+    const response = createResponse();
+    jest.spyOn(travelServiceImpl, 'addUserAsConfirmed').mockResolvedValue();
+    await travelController.addUserAsConfirmed(
+      updateUserAsConfirmedDTO,
+      response,
+    );
+    expect(response._getStatusCode()).toBe(HttpStatus.NO_CONTENT);
+  });
+
+  it('should error when update user to confirmed', async () => {
+    const updateUserAsConfirmedDTO: UpdateUserAsConfirmedDTO = {
+      travelId: '1',
+      userId: '1',
+    };
+    const response = createResponse();
+    const errorMessage = 'Falha na requisição';
+    jest
+      .spyOn(travelServiceImpl, 'addUserAsConfirmed')
+      .mockRejectedValue(new Error());
+
+    try {
+      await travelController.addUserAsConfirmed(
+        updateUserAsConfirmedDTO,
+        response,
+      );
     } catch (error) {
       expect(error.message).toBe(errorMessage);
     }
