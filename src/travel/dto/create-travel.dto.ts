@@ -1,6 +1,6 @@
 import { CreateUserDTO } from 'src/users/dto/create-user-body';
 
-export class CreateTravelDto {
+export class CreateTravelDTO {
   id: string;
 
   value: string;

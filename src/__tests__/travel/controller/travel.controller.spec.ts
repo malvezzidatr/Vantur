@@ -7,7 +7,7 @@ import { TravelRepository } from '../../../travel/repositories/travels-repositor
 import { PrismaTravelRepository } from '../../../travel/repositories/prisma/prisma-travels-repository';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from '../../../auth/constants/token';
-import { CreateTravelDto } from 'src/travel/dto/create-travel.dto';
+import { CreateTravelDTO } from 'src/travel/dto/create-travel.dto';
 import { createResponse } from 'node-mocks-http';
 import { HttpStatus } from '@nestjs/common';
 import { UpdateUserAsConfirmedDTO } from 'src/travel/dto/update-user-as-confirmed.dto';
@@ -40,7 +40,7 @@ describe('TravelController', () => {
   });
 
   it('should create a travel', async () => {
-    const createTravelDTO: CreateTravelDto = {
+    const createTravelDTO: CreateTravelDTO = {
       destination: 'test',
       departure_location: 'test',
       id: '',
@@ -59,7 +59,7 @@ describe('TravelController', () => {
   });
 
   it('should handle error when creating a travel', async () => {
-    const createTravelDTO: CreateTravelDto = {
+    const createTravelDTO: CreateTravelDTO = {
       destination: 'test',
       departure_location: 'test',
       id: '',
@@ -104,7 +104,7 @@ describe('TravelController', () => {
   });
 
   it('should get travel by id', async () => {
-    const createTravelDTO: CreateTravelDto = {
+    const createTravelDTO: CreateTravelDTO = {
       destination: 'test',
       departure_location: 'test',
       id: '',

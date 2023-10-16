@@ -1,5 +1,5 @@
 import { IsNotEmpty, Length, IsEmail } from 'class-validator';
-import { CreateTravelDto } from '../../travel/dto/create-travel.dto';
+import { CreateTravelDTO } from '../../travel/dto/create-travel.dto';
 
 export class CreateUserDTO {
   id: string;
@@ -29,5 +29,5 @@ export class CreateUserDTO {
   })
   password?: string;
 
-  travels: CreateTravelDto[];
+  travels: CreateTravelDTO[];
 }

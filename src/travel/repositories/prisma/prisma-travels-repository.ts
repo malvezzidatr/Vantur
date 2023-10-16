@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TravelRepository } from '../travels-repository';
 import { PrismaService } from '../../../database/prisma.service';
-import { CreateTravelDto } from '../../../travel/dto/create-travel.dto';
+import { CreateTravelDTO } from '../../../travel/dto/create-travel.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UpdateUserAsPendingDTO } from '../../../travel/dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from '../../../travel/dto/update-user-as-confirmed.dto';
@@ -37,10 +37,10 @@ export class PrismaTravelRepository implements TravelRepository {
     }
   }
 
-  async createTravel(createTravelDto: CreateTravelDto) {
+  async createTravel(createTravelDTO: CreateTravelDTO) {
     try {
       const { departure_location, destination, seats, value, ownerId } =
-        createTravelDto;
+        createTravelDTO;
       await this.prisma.travel.create({
         data: {
           departure_location,

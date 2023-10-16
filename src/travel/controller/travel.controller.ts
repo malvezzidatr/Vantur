@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { TravelServiceImpl } from '../services/travel-service-impl.service';
-import { CreateTravelDto } from '../dto/create-travel.dto';
+import { CreateTravelDTO } from '../dto/create-travel.dto';
 import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
 import { Response } from 'express';
@@ -24,11 +24,11 @@ export class TravelController {
   @UseGuards(AuthGuard)
   @Post('create')
   async createTravel(
-    @Body() createTravelDto: CreateTravelDto,
+    @Body() createTravelDTO: CreateTravelDTO,
     @Res() response: Response,
   ) {
     try {
-      await this.travelServiceImpl.createTravel(createTravelDto);
+      await this.travelServiceImpl.createTravel(createTravelDTO);
       return response.status(HttpStatus.CREATED).send();
     } catch (err) {
       throw new HttpException('Falha ao criar viagem', HttpStatus.BAD_REQUEST);
