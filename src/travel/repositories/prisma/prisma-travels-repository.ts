@@ -33,7 +33,7 @@ export class PrismaTravelRepository implements TravelRepository {
         },
       });
     } catch (err) {
-      throw new Error();
+      throw new Error('Falha ao buscar viagens');
     }
   }
 
@@ -56,7 +56,7 @@ export class PrismaTravelRepository implements TravelRepository {
         },
       });
     } catch (err) {
-      throw new Error();
+      throw new Error('Falha ao criar viagem');
     }
   }
 
@@ -89,7 +89,7 @@ export class PrismaTravelRepository implements TravelRepository {
         },
       });
     } catch (err) {
-      throw new Error();
+      throw new Error('Falha ao buscar viagem');
     }
   }
 
@@ -109,7 +109,7 @@ export class PrismaTravelRepository implements TravelRepository {
         },
       });
     } catch (err) {
-      throw new Error();
+      throw new Error('Falha ao atualizar usuário para pendente');
     }
   }
 
@@ -134,7 +134,7 @@ export class PrismaTravelRepository implements TravelRepository {
         },
       });
     } catch (err) {
-      throw new Error();
+      throw new Error('Falha ao atualizar usuário para confirmado');
     }
   }
 }
