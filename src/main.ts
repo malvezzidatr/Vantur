@@ -10,8 +10,13 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Vantur API')
     .setDescription('Vantur API')
-    .setVersion('0.1')
-    .addTag('teste')
+    .setVersion('0.4')
+    .addTag('Auth')
+    .addTag('User')
+    .addTag('Travel')
+    .addBearerAuth({
+      type: 'apiKey',
+    })
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);

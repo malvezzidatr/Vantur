@@ -16,7 +16,9 @@ import { UserServiceImpl } from '../services/users-service-impl.service';
 import { UpdateUserDTO } from '../dto/update-user';
 import { AuthGuard } from '../../auth/auth.guard';
 import { Response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private userServiceImpl: UserServiceImpl) {}

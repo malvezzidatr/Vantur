@@ -16,7 +16,9 @@ import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
 import { Response } from 'express';
 import { AuthGuard } from '../../auth/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Travel')
 @Controller('travel')
 export class TravelController {
   constructor(private readonly travelServiceImpl: TravelServiceImpl) {}
