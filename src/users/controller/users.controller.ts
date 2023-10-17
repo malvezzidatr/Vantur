@@ -16,7 +16,7 @@ import { UserServiceImpl } from '../services/users-service-impl.service';
 import { UpdateUserDTO } from '../dto/update-user';
 import { AuthGuard } from '../../auth/auth.guard';
 import { Response } from 'express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('User')
 @Controller('user')
@@ -39,6 +39,7 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth('authorization')
   @UseGuards(AuthGuard)
   @Get('list/id/:id')
   @HttpCode(HttpStatus.OK)
@@ -54,6 +55,8 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth('authorization')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('list/email/:email')
   @HttpCode(HttpStatus.OK)
@@ -72,6 +75,7 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth('authorization')
   @UseGuards(AuthGuard)
   @Put('update/:id')
   @HttpCode(HttpStatus.NO_CONTENT)

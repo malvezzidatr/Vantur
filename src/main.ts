@@ -14,9 +14,16 @@ async function bootstrap() {
     .addTag('Auth')
     .addTag('User')
     .addTag('Travel')
-    .addBearerAuth({
-      type: 'apiKey',
-    })
+    .addBearerAuth(
+      {
+        type: 'http',
+        in: 'Header',
+        name: 'authorization',
+        scheme: 'Bearer',
+        bearerFormat: 'Bearer',
+      },
+      'authorization',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
