@@ -30,6 +30,7 @@ model Travel {
   seats              Int
   owner              User?           @relation("owner", fields: [ownerId], references: [id])
   ownerId            String?
+  file               Bytes[]
   pendents           PendingUser[]
   confirmeds         ConfirmedUser[]
 }

@@ -5,6 +5,7 @@ import { CreateTravelDTO } from '../../../travel/dto/create-travel.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UpdateUserAsPendingDTO } from '../../../travel/dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from '../../../travel/dto/update-user-as-confirmed.dto';
+import { FileDTO } from 'src/travel/dto/file.dto';
 
 @Injectable()
 export class PrismaTravelRepository implements TravelRepository {
@@ -19,6 +20,7 @@ export class PrismaTravelRepository implements TravelRepository {
           destination: true,
           value: true,
           seats: true,
+          file: true,
           confirmeds: {
             select: {
               id: true,
@@ -37,7 +39,7 @@ export class PrismaTravelRepository implements TravelRepository {
     }
   }
 
-  async createTravel(createTravelDTO: CreateTravelDTO) {
+  async createTravel(createTravelDTO: CreateTravelDTO, file: FileDTO) {
     try {
       const { departure_location, destination, seats, value, ownerId } =
         createTravelDTO;
@@ -46,8 +48,9 @@ export class PrismaTravelRepository implements TravelRepository {
           departure_location,
           destination,
           id: uuidv4(),
-          seats,
+          seats: Number(seats),
           value,
+          file: [file.buffer],
           owner: {
             connect: {
               id: ownerId,
@@ -70,6 +73,7 @@ export class PrismaTravelRepository implements TravelRepository {
           destination: true,
           seats: true,
           value: true,
+          file: true,
           owner: {
             select: {
               first_name: true,

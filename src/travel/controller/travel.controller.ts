@@ -9,6 +9,8 @@ import {
   HttpStatus,
   HttpException,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { TravelServiceImpl } from '../services/travel-service-impl.service';
 import { CreateTravelDTO } from '../dto/create-travel.dto';
@@ -17,6 +19,8 @@ import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
 import { Response } from 'express';
 import { AuthGuard } from '../../auth/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FileDTO } from '../dto/file.dto';
 
 @ApiBearerAuth('authorization')
 @ApiTags('Travel')
@@ -24,21 +28,23 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class TravelController {
   constructor(private readonly travelServiceImpl: TravelServiceImpl) {}
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Post('create')
+  @UseInterceptors(FileInterceptor('file'))
   async createTravel(
     @Body() createTravelDTO: CreateTravelDTO,
     @Res() response: Response,
+    @UploadedFile() file: FileDTO,
   ) {
     try {
-      await this.travelServiceImpl.createTravel(createTravelDTO);
+      await this.travelServiceImpl.createTravel(createTravelDTO, file);
       return response.status(HttpStatus.CREATED).send();
     } catch (err) {
       throw new HttpException('Falha ao criar viagem', HttpStatus.BAD_REQUEST);
     }
   }
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Get()
   async getAllTravels(@Res() response: Response) {
     try {

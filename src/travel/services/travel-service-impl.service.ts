@@ -5,6 +5,7 @@ import { TravelRepository } from '../repositories/travels-repository';
 import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
 import { UserServiceImpl } from '../../users/services/users-service-impl.service';
 import { TravelService } from './travel-service';
+import { FileDTO } from '../dto/file.dto';
 
 @Injectable()
 export class TravelServiceImpl implements TravelService {
@@ -13,9 +14,9 @@ export class TravelServiceImpl implements TravelService {
     private readonly userServiceImpl: UserServiceImpl,
   ) {}
 
-  async createTravel(createTravelDTO: CreateTravelDTO) {
+  async createTravel(createTravelDTO: CreateTravelDTO, file: FileDTO) {
     try {
-      await this.travelRepository.createTravel(createTravelDTO);
+      await this.travelRepository.createTravel(createTravelDTO, file);
       return;
     } catch (err) {
       throw new Error('Falha ao criar viagem');
