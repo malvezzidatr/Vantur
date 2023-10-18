@@ -9,6 +9,7 @@ import { PrismaService } from '../../../database/prisma.service';
 import { CreateTravelDTO } from 'src/travel/dto/create-travel.dto';
 import { UpdateUserAsPendingDTO } from 'src/travel/dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from 'src/travel/dto/update-user-as-confirmed.dto';
+import { FileDTO } from '../../../travel/dto/file.dto';
 
 class TravelRepositoryMock {
   createTravel() {}
@@ -21,6 +22,7 @@ class TravelRepositoryMock {
 describe('TravelServiceImpl', () => {
   let travelService: TravelServiceImpl;
   let travelRepository: TravelRepository;
+
   const createTravelDTO: CreateTravelDTO = {
     destination: 'test',
     departure_location: 'test',
@@ -30,6 +32,7 @@ describe('TravelServiceImpl', () => {
     value: '150',
     pendents: [],
     confirmeds: [],
+    file: new FileDTO(),
   };
   const updateUser: UpdateUserAsPendingDTO | UpdateUserAsConfirmedDTO = {
     travelId: '1',
@@ -63,9 +66,12 @@ describe('TravelServiceImpl', () => {
       .spyOn(travelRepository, 'createTravel')
       .mockResolvedValue();
 
-    await travelService.createTravel(createTravelDTO);
+    await travelService.createTravel(createTravelDTO, new FileDTO());
 
-    expect(createTravelSpy).toHaveBeenCalledWith(createTravelDTO);
+    expect(createTravelSpy).toHaveBeenCalledWith(
+      createTravelDTO,
+      createTravelDTO.file,
+    );
   });
 
   it('should throw an error when createTravel fails', async () => {
@@ -75,7 +81,7 @@ describe('TravelServiceImpl', () => {
       .mockRejectedValue(new Error(errorMessage));
 
     try {
-      await travelService.createTravel(createTravelDTO);
+      await travelService.createTravel(createTravelDTO, new FileDTO());
     } catch (error) {
       expect(error.message).toBe(errorMessage);
     }
@@ -92,6 +98,7 @@ describe('TravelServiceImpl', () => {
         value: '150',
         pendents: [],
         confirmeds: [],
+        file: new FileDTO(),
       },
     ];
 
@@ -114,6 +121,7 @@ describe('TravelServiceImpl', () => {
         value: '150',
         pendents: [],
         confirmeds: [],
+        file: new FileDTO(),
       },
     ];
     const errorMessage = 'Falha ao buscar viagens';

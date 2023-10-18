@@ -12,6 +12,7 @@ import { createResponse } from 'node-mocks-http';
 import { HttpStatus } from '@nestjs/common';
 import { UpdateUserAsConfirmedDTO } from 'src/travel/dto/update-user-as-confirmed.dto';
 import { UpdateUserAsPendingDTO } from 'src/travel/dto/update-user-as-pending.dto';
+import { FileDTO } from '../../../travel/dto/file.dto';
 
 describe('TravelController', () => {
   let travelController: TravelController;
@@ -49,11 +50,16 @@ describe('TravelController', () => {
       value: '150',
       pendents: [],
       confirmeds: [],
+      file: new FileDTO(),
     };
 
     jest.spyOn(travelServiceImpl, 'createTravel').mockResolvedValue();
     const response = createResponse();
-    await travelController.createTravel(createTravelDTO, response);
+    await travelController.createTravel(
+      createTravelDTO,
+      response,
+      new FileDTO(),
+    );
 
     expect(response._getStatusCode()).toBe(HttpStatus.CREATED);
   });
@@ -68,6 +74,7 @@ describe('TravelController', () => {
       value: '150',
       pendents: [],
       confirmeds: [],
+      file: new FileDTO(),
     };
     jest
       .spyOn(travelServiceImpl, 'createTravel')
@@ -77,7 +84,11 @@ describe('TravelController', () => {
     const errorMessage = 'Falha ao criar viagem';
 
     try {
-      await travelController.createTravel(createTravelDTO, response);
+      await travelController.createTravel(
+        createTravelDTO,
+        response,
+        new FileDTO(),
+      );
     } catch (error) {
       expect(error.message).toBe(errorMessage);
     }
@@ -113,6 +124,7 @@ describe('TravelController', () => {
       value: '150',
       pendents: [],
       confirmeds: [],
+      file: new FileDTO(),
     };
     const id = '1';
     const response = createResponse();

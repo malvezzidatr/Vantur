@@ -3,6 +3,7 @@ import { PrismaService } from '../../../database/prisma.service';
 import { CreateTravelDTO } from '../../../travel/dto/create-travel.dto';
 import { UpdateUserAsPendingDTO } from 'src/travel/dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from 'src/travel/dto/update-user-as-confirmed.dto';
+import { FileDTO } from '../../../travel/dto/file.dto';
 
 describe('PrismaTravelRepository', () => {
   let travelRepository: PrismaTravelRepository;
@@ -23,6 +24,7 @@ describe('PrismaTravelRepository', () => {
       pendents: [],
       seats: 15,
       value: '150',
+      file: new FileDTO(),
     };
     prismaService.travel.findMany = jest.fn().mockResolvedValue([travelMock]);
 
@@ -35,6 +37,7 @@ describe('PrismaTravelRepository', () => {
         destination: true,
         value: true,
         seats: true,
+        file: true,
         confirmeds: {
           select: {
             id: true,
@@ -72,11 +75,12 @@ describe('PrismaTravelRepository', () => {
       id: '',
       confirmeds: [],
       pendents: [],
+      file: new FileDTO(),
     };
 
     prismaService.travel.create = jest.fn().mockResolvedValue({});
 
-    await travelRepository.createTravel(createTravelDTO);
+    await travelRepository.createTravel(createTravelDTO, new FileDTO());
 
     expect(prismaService.travel.create).toHaveBeenCalledWith({
       data: {
@@ -85,6 +89,7 @@ describe('PrismaTravelRepository', () => {
         id: expect.any(String),
         seats: 10,
         value: '100',
+        file: [createTravelDTO.file.buffer],
         owner: {
           connect: {
             id: 'owner_id_here',
@@ -104,6 +109,7 @@ describe('PrismaTravelRepository', () => {
       id: '1',
       confirmeds: [],
       pendents: [],
+      file: new FileDTO(),
     };
 
     prismaService.travel.create = jest
@@ -111,7 +117,7 @@ describe('PrismaTravelRepository', () => {
       .mockRejectedValue(new Error('Mocked error'));
 
     await expect(
-      travelRepository.createTravel(createTravelDTO),
+      travelRepository.createTravel(createTravelDTO, new FileDTO()),
     ).rejects.toThrowError('Falha ao criar viagem');
   });
 
@@ -125,6 +131,7 @@ describe('PrismaTravelRepository', () => {
       id: '',
       confirmeds: [],
       pendents: [],
+      file: new FileDTO(),
     };
     const travelId = '1';
 
@@ -144,6 +151,7 @@ describe('PrismaTravelRepository', () => {
         destination: true,
         seats: true,
         value: true,
+        file: true,
         owner: {
           select: {
             first_name: true,
