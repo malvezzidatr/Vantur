@@ -3,6 +3,7 @@ import { IsNotEmpty } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CreateUserDTO } from 'src/users/dto/create-user-body';
+import { FileDTO } from './file.dto';
 
 export class CreateTravelDTO {
   id: string;
@@ -51,6 +52,13 @@ export class CreateTravelDTO {
     message: 'Owner id cant be empty',
   })
   ownerId: string;
+
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    description: 'Image of travel',
+  })
+  file: FileDTO;
 
   confirmeds: CreateUserDTO[];
 

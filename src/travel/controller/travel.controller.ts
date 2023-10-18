@@ -18,7 +18,7 @@ import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
 import { UpdateUserAsConfirmedDTO } from '../dto/update-user-as-confirmed.dto';
 import { Response } from 'express';
 import { AuthGuard } from '../../auth/auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileDTO } from '../dto/file.dto';
 
@@ -28,8 +28,9 @@ import { FileDTO } from '../dto/file.dto';
 export class TravelController {
   constructor(private readonly travelServiceImpl: TravelServiceImpl) {}
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Post('create')
+  @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   async createTravel(
     @Body() createTravelDTO: CreateTravelDTO,
@@ -44,7 +45,7 @@ export class TravelController {
     }
   }
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Get()
   async getAllTravels(@Res() response: Response) {
     try {
