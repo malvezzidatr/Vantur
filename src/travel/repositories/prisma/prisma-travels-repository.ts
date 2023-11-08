@@ -14,6 +14,7 @@ export class PrismaTravelRepository implements TravelRepository {
   async getAllTravels(): Promise<any> {
     try {
       return await this.prisma.travel.findMany({
+        orderBy: { create_at: 'desc' },
         select: {
           id: true,
           departure_location: true,

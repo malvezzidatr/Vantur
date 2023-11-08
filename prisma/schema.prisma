@@ -24,6 +24,7 @@ model User {
 
 model Travel {
   id                 String          @id @map("_id")
+  create_at          DateTime        @default(now())
   value              String
   departure_location String
   destination        String
