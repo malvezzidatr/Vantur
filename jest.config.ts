@@ -1,4 +1,5 @@
 export default {
+  setupFilesAfterEnv: ['./setupTests.ts'],
   preset: 'ts-jest',
   testEnvironment: 'node',
   rootDir: './',

@@ -11,13 +11,12 @@ import { PrismaUserRepository } from './repositories/prisma/prisma-users-reposit
 import { CheckUserMiddleware } from '../middleware/check-user-by-email.middleware';
 import { UserController } from './controller/users.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from '../auth/constants/token';
 
 @Module({
   imports: [
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
+      secret: process.env.SECRET,
       signOptions: { expiresIn: '500s' },
     }),
   ],

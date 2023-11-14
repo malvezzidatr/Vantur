@@ -3,7 +3,6 @@ import { TravelServiceImpl } from '../../../travel/services/travel-service-impl.
 import { TravelRepository } from '../../../travel/repositories/travels-repository';
 import { UsersModule } from '../../../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from '../../../auth/constants/token';
 import { TravelController } from '../../../travel/controller/travel.controller';
 import { PrismaService } from '../../../database/prisma.service';
 import { CreateTravelDTO } from 'src/travel/dto/create-travel.dto';
@@ -43,7 +42,7 @@ describe('TravelServiceImpl', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         UsersModule,
-        JwtModule.register({ secret: jwtConstants.secret }),
+        JwtModule.register({ secret: process.env.SECRET }),
       ],
       controllers: [TravelController],
       providers: [

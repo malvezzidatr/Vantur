@@ -3,14 +3,13 @@ import { AuthController } from './controller/auth.controller';
 import { AuthServiceImpl } from './services/auth-service-impl.service';
 import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants/token';
 
 @Module({
   imports: [
     UsersModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
+      secret: process.env.SECRET,
       signOptions: { expiresIn: '500s' },
     }),
   ],

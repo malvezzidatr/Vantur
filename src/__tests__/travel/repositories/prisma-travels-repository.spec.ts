@@ -31,6 +31,9 @@ describe('PrismaTravelRepository', () => {
     const travels = await travelRepository.getAllTravels();
 
     expect(prismaService.travel.findMany).toHaveBeenCalledWith({
+      orderBy: {
+        create_at: 'desc',
+      },
       select: {
         id: true,
         departure_location: true,

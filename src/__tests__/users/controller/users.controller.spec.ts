@@ -6,7 +6,6 @@ import { PrismaService } from '../../../database/prisma.service';
 import { UserRepository } from '../../../users/repositories/users-repository';
 import { PrismaUserRepository } from '../../../users/repositories/prisma/prisma-users-repository';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from '../../../auth/constants/token';
 import { createResponse } from 'node-mocks-http';
 import { HttpStatus } from '@nestjs/common';
 import { UpdateUserDTO } from '../../../users/dto/update-user';
@@ -17,7 +16,7 @@ describe('UserController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [JwtModule.register({ secret: jwtConstants.secret })],
+      imports: [JwtModule.register({ secret: process.env.SECRET })],
       providers: [
         UserServiceImpl,
         PrismaService,

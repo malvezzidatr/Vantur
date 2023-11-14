@@ -1,7 +1,7 @@
 import { AuthGuard } from '../../auth/auth.guard';
 import { UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from '../../auth/constants/token';
+// import { jwtConstants } from '../../auth/constants/token';
 
 describe('AuthGuard', () => {
   let authGuard: AuthGuard;
@@ -18,12 +18,12 @@ describe('AuthGuard', () => {
 
   it('should return true when a valid token is provided', async () => {
     const payload = {
-      sub: 'user_id_here',
-      first_name: 'John',
-      last_name: 'Doe',
+      sub: 'c39918e5-21de-45c9-85ef-6515d2d8ae27',
+      first_name: 'Caio',
+      last_name: 'Malvezzi',
     };
     const token = await jwtService.signAsync(payload, {
-      secret: jwtConstants.secret,
+      secret: process.env.SECRET,
     });
     const context = {
       switchToHttp: () => ({

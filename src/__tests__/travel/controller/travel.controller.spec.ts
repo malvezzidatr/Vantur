@@ -6,7 +6,6 @@ import { PrismaService } from '../../../database/prisma.service';
 import { TravelRepository } from '../../../travel/repositories/travels-repository';
 import { PrismaTravelRepository } from '../../../travel/repositories/prisma/prisma-travels-repository';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from '../../../auth/constants/token';
 import { CreateTravelDTO } from 'src/travel/dto/create-travel.dto';
 import { createResponse } from 'node-mocks-http';
 import { HttpStatus } from '@nestjs/common';
@@ -22,7 +21,7 @@ describe('TravelController', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         UsersModule,
-        JwtModule.register({ secret: jwtConstants.secret }),
+        JwtModule.register({ secret: process.env.SECRET }),
       ],
       controllers: [TravelController],
       providers: [
