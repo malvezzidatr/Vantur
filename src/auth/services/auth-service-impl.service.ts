@@ -11,26 +11,46 @@ export class AuthServiceImpl implements AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  private decodeToken(token: string) {
+    try {
+      const decoded = this.jwtService.decode(token, { json: true }) as {
+        exp: number;
+      };
+      return decoded.exp;
+    } catch (error) {
+      console.error('Erro ao decodificar o token: ', error.message);
+      return null;
+    }
+  }
+
   async signIn(email: string, password: string): Promise<any> {
     const user = await this.userServiceImUserServiceImpl.getUserByEmail(email);
 
-    if (!user) {
-      throw new UnauthorizedException();
+    if (!user || !user?.password) {
+      throw new UnauthorizedException({
+        message: 'Usuário ou senha inválidos',
+      });
     }
 
-    const psswdIsEqual = await comparePsswd(password, user?.password);
-    if (!psswdIsEqual) {
-      throw new UnauthorizedException();
+    const psswdIsValid = await comparePsswd(password, user?.password);
+    if (!psswdIsValid) {
+      throw new UnauthorizedException({
+        message: 'Usuário ou senha inválidos',
+      });
     }
 
-    const payload = {
-      sub: user?.id,
+    const userData = {
+      id: user?.id,
       first_name: user?.first_name,
       last_name: user?.last_name,
     };
 
+    const token = await this.jwtService.signAsync(userData);
+
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: token,
+      userData,
+      exp: this.decodeToken(token),
     };
   }
 }

@@ -1,14 +1,13 @@
 import { AuthGuard } from '../../auth/auth.guard';
 import { UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-// import { jwtConstants } from '../../auth/constants/token';
 
 describe('AuthGuard', () => {
   let authGuard: AuthGuard;
   let jwtService: JwtService;
 
   beforeEach(() => {
-    jwtService = new JwtService({}); // Substitua com as opções do JwtService, se necessário
+    jwtService = new JwtService({});
     authGuard = new AuthGuard(jwtService);
   });
 
