@@ -11,16 +11,16 @@ export class AuthServiceImpl implements AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  private decodeToken(token: string) {
-    try {
-      const decoded = this.jwtService.decode(token, { json: true }) as {
-        exp: number;
-      };
-      return decoded.exp;
-    } catch (error) {
-      console.error('Erro ao decodificar o token: ', error.message);
-      return null;
-    }
+  public generateTokens(user: any) {
+    const userData = {
+      id: user?.id,
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+    };
+
+    const accessToken = this.jwtService.sign(userData);
+
+    return { accessToken };
   }
 
   async signIn(email: string, password: string): Promise<any> {
@@ -39,18 +39,52 @@ export class AuthServiceImpl implements AuthService {
       });
     }
 
-    const userData = {
-      id: user?.id,
-      first_name: user?.first_name,
-      last_name: user?.last_name,
-    };
-
-    const token = await this.jwtService.signAsync(userData);
+    const { accessToken } = this.generateTokens(user);
 
     return {
-      access_token: token,
-      userData,
-      exp: this.decodeToken(token),
+      access_token: accessToken,
+      userData: {
+        id: user?.id,
+        first_name: user?.first_name,
+        last_name: user?.last_name,
+      },
     };
+  }
+
+  async refreshAccessToken(refreshToken: string): Promise<any> {
+    try {
+      const decodedRefreshToken = this.jwtService.verify(refreshToken) as {
+        id: string;
+      };
+
+      const user = await this.userServiceImUserServiceImpl.getUserById(
+        decodedRefreshToken.id,
+      );
+
+      if (!user) {
+        throw new UnauthorizedException({
+          message: 'Usuário não encontrado',
+        });
+      }
+
+      const newAccessToken = this.jwtService.sign({
+        id: user.id,
+        first_name: user.first_name,
+        last_name: user.last_name,
+      });
+
+      return {
+        access_token: newAccessToken,
+        userData: {
+          id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+        },
+      };
+    } catch (error) {
+      throw new UnauthorizedException({
+        message: 'Token de atualização inválido ou expirado',
+      });
+    }
   }
 }
