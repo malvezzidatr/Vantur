@@ -14,7 +14,7 @@ export class TravelServiceImpl implements TravelService {
     private readonly userServiceImpl: UserServiceImpl,
   ) {}
 
-  async createTravel(createTravelDTO: CreateTravelDTO, file: FileDTO) {
+  async createTravel(createTravelDTO: CreateTravelDTO, file: FileDTO[]) {
     try {
       await this.travelRepository.createTravel(createTravelDTO, file);
       return;

@@ -6,7 +6,7 @@ import { UpdateUserAsPendingDTO } from '../dto/update-user-as-pending.dto';
 export abstract class TravelService {
   abstract createTravel(
     createTravelDTO: CreateTravelDTO,
-    file: FileDTO,
+    file: FileDTO[],
   ): Promise<any>;
   abstract getAllTravels(): Promise<any>;
   abstract getTravelById(id: string): Promise<any>;

@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { TravelRepository } from '../travels-repository';
 import { PrismaService } from '../../../database/prisma.service';
 import { CreateTravelDTO } from '../../../travel/dto/create-travel.dto';
@@ -40,10 +40,13 @@ export class PrismaTravelRepository implements TravelRepository {
     }
   }
 
-  async createTravel(createTravelDTO: CreateTravelDTO, file: FileDTO) {
+  async createTravel(createTravelDTO: CreateTravelDTO, file: FileDTO[]) {
     try {
-      const image = Buffer.from(file.buffer);
-      const base64 = image.toString('base64');
+      const images = file.map((item) => {
+        const image = Buffer.from(item.buffer);
+        const base64 = image.toString('base64');
+        return base64;
+      });
       const { departure_location, destination, seats, value, ownerId } =
         createTravelDTO;
 
@@ -54,7 +57,7 @@ export class PrismaTravelRepository implements TravelRepository {
           id: uuidv4(),
           seats: Number(seats),
           value,
-          file: base64,
+          file: images,
           owner: {
             connect: {
               id: ownerId,

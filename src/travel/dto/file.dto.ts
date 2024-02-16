@@ -1,7 +1,14 @@
-export class FileDTO {
-  fieldName: string;
-  originalName: string;
+import { Readable } from 'stream';
+
+export class FileDTO implements Express.Multer.File {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
   mimetype: string;
-  buffer: Buffer;
   size: number;
+  stream: Readable;
+  destination: string;
+  filename: string;
+  path: string;
+  buffer: Buffer;
 }
